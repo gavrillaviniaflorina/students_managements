@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query(value = "select * from course where name like ?1",nativeQuery = true)
-    Optional<Course> selectedNameExists(String email);
+    Optional<Course> selectedNameExists(String name);
 }

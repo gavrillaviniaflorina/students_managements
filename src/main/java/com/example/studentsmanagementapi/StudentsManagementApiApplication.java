@@ -27,7 +27,7 @@ public class StudentsManagementApiApplication {
     ){
         return args->{
 
-//            Faker faker=new Faker();
+           Faker faker=new Faker();
 //
 //
 //            for(int i=0;i<10;i++){
@@ -39,7 +39,7 @@ public class StudentsManagementApiApplication {
 //            }
 //
 //
-//            User user=userRepository.findById(5L).get();
+          User user=userRepository.findById(22L).get();
 //
 //            for(int i=0;i<10;i++){
 //
@@ -52,15 +52,15 @@ public class StudentsManagementApiApplication {
 //            userRepository.save(user);
 //
 
-//            for(int i=0;i<10;i++){
-//
-//;
-//                Course course=new Course(faker.book().title(),faker.book().author());
-//
-//                user.addCourse(course);
-//            }
-//
-//            userRepository.save(user);
+            for(int i=0;i<10;i++){
+
+;
+                Course course=new Course(faker.book().title(),faker.book().author());
+
+                user.addCourse(course);
+            }
+
+            userRepository.save(user);
 
 
 

@@ -2,11 +2,13 @@ package com.example.studentsmanagementapi.service;
 
 
 import com.example.studentsmanagementapi.dto.BookDto;
+import com.example.studentsmanagementapi.dto.CourseDto;
 import com.example.studentsmanagementapi.dto.UserDto;
 import com.example.studentsmanagementapi.exceptions.BookExistsException;
 import com.example.studentsmanagementapi.exceptions.BookNotFoundException;
 import com.example.studentsmanagementapi.exceptions.UserNotFoundException;
 import com.example.studentsmanagementapi.model.Book;
+import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.repository.BookRepository;
 import com.example.studentsmanagementapi.repository.CourseRepository;
@@ -86,6 +88,14 @@ public class UserService {
             return userRepository.save(person);
         });
     }
+
+//    public void addCourse(CourseDto courseDto){
+//      boolean exists=this.courseRepository.selectedNameExists(courseDto.getName()){
+//          if(exists){
+//              throw new Course
+//          }
+//        }
+//    }
 
     public void addBook(BookDto bookDto){
         boolean exists=this.bookRepository.selectedNameExists(bookDto.getBook_name()).isPresent();
