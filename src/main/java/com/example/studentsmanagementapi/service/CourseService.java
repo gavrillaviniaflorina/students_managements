@@ -33,6 +33,7 @@ public class CourseService {
 //        courseRepository.save(new Course(course.getName(),course.getDepartament()));
 //    }
 
+
     public void deleteCourse(Long id){
         Boolean existsId=this.courseRepository.findById(id).isEmpty();
 

@@ -39,7 +39,7 @@ public class StudentsManagementApiApplication {
 //            }
 //
 //
-          User user=userRepository.findById(22L).get();
+          User user=userRepository.findById(17L).get();
 //
 //            for(int i=0;i<10;i++){
 //
@@ -52,18 +52,27 @@ public class StudentsManagementApiApplication {
 //            userRepository.save(user);
 //
 
-            for(int i=0;i<10;i++){
-
-;
-                Course course=new Course(faker.book().title(),faker.book().author());
-
-                user.addCourse(course);
-            }
+//            for(int i=0;i<10;i++){
+//
+//;
+//                Course course=new Course(faker.book().title(),faker.book().author());
+//
+//                user.addCourse(course);
+//            }
+//
+//            userRepository.save(user);
+//
+//
+//
+//            for(int i=0;i<10;i++){
+//                Course course=new Course(faker.book().title(),faker.book().author());
+//
+//                courseRepository.save(course);
+//            }
+//
+            user.addCourse(courseRepository.findById(13L).get());
 
             userRepository.save(user);
-
-
-
 
         };
     }

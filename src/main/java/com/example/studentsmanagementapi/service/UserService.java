@@ -4,9 +4,7 @@ package com.example.studentsmanagementapi.service;
 import com.example.studentsmanagementapi.dto.BookDto;
 import com.example.studentsmanagementapi.dto.CourseDto;
 import com.example.studentsmanagementapi.dto.UserDto;
-import com.example.studentsmanagementapi.exceptions.BookExistsException;
-import com.example.studentsmanagementapi.exceptions.BookNotFoundException;
-import com.example.studentsmanagementapi.exceptions.UserNotFoundException;
+import com.example.studentsmanagementapi.exceptions.*;
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.model.User;
@@ -17,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +26,7 @@ public class UserService {
     private BookRepository bookRepository;
     private CourseRepository courseRepository;
     private ModelMapper modelMapper;
+    private User
 
     public UserService(UserRepository userRepository, BookRepository bookRepository, CourseRepository courseRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
@@ -89,15 +89,22 @@ public class UserService {
         });
     }
 
-//    public void addCourse(CourseDto courseDto){
-//      boolean exists=this.courseRepository.selectedNameExists(courseDto.getName()){
-//          if(exists){
-//              throw new Course
-//          }
-//        }
-//    }
+    @Transactional
+    public void addCourse(CourseDto courseDto){
+      boolean exists=this.courseRepository.selectedNameExists(courseDto.getName()).isPresent();
+          if(!exists){
+              throw new CourseNotFoundException(
+                      "Course does not exists");
+          }
 
-    public void addBook(BookDto bookDto){
+
+
+
+        }
+
+
+    @Transactional
+    public void addBook(Long id,BookDto bookDto){
         boolean exists=this.bookRepository.selectedNameExists(bookDto.getBook_name()).isPresent();
         if(exists){
             throw new BookExistsException(
@@ -128,6 +135,7 @@ public class UserService {
 
     }
 
+    @Transactional
     public void deleteBook(Long id){
 
         Optional<Book> book=bookRepository.findById(id);
