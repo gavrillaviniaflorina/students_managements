@@ -1,6 +1,5 @@
 package com.example.studentsmanagementapi.service;
 
-
 import com.example.studentsmanagementapi.dto.BookDto;
 import com.example.studentsmanagementapi.dto.CourseDto;
 import com.example.studentsmanagementapi.dto.UserDto;
@@ -12,12 +11,10 @@ import com.example.studentsmanagementapi.repository.BookRepository;
 import com.example.studentsmanagementapi.repository.CourseRepository;
 import com.example.studentsmanagementapi.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,7 +23,6 @@ public class UserService {
     private BookRepository bookRepository;
     private CourseRepository courseRepository;
     private ModelMapper modelMapper;
-    private User
 
     public UserService(UserRepository userRepository, BookRepository bookRepository, CourseRepository courseRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
@@ -39,26 +35,24 @@ public class UserService {
         return  this.userRepository.findAll();
     }
 
-
-
+    @Transactional
     public void addUser(UserDto user){
 
         boolean userExists= this.userRepository.selectedEmailExists(user.getEmail()).isPresent();
-
 
         if(userExists){
             throw new UserNotFoundException("User not found");
         }
 
-        User userSaved=new User(user.getName(),user.getEmail(), user.getPassword());
+        User userSaved=this.userRepository.selectedEmailExists(user.getEmail()).get();
         this.userRepository.save(userSaved);
     }
 
-
+    @Transactional
     public void deleteUser(Long id){
-        Boolean existsId=this.userRepository.selectedIdExists(id).isEmpty();
+        Boolean userExists=this.userRepository.selectedIdExists(id).isEmpty();
 
-        if(existsId){
+        if(userExists){
             throw new UserNotFoundException(
                     "User not found"
             );
@@ -66,13 +60,12 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-
+    @Transactional
     public void updateUser(UserDto userDto) {
 
+        Boolean userExists = this.userRepository.selectedEmailExists(userDto.getEmail()).isPresent();
 
-        Boolean exists = this.userRepository.selectedEmailExists(userDto.getEmail()).isPresent();
-
-        if (exists) {
+        if (userExists) {
             throw new UserNotFoundException(
                     "User not found"
             );
@@ -90,68 +83,102 @@ public class UserService {
     }
 
     @Transactional
-    public void addCourse(CourseDto courseDto){
-      boolean exists=this.courseRepository.selectedNameExists(courseDto.getName()).isPresent();
-          if(!exists){
+    public void addCourseForUser(Long userId, Long courseId){
+
+        boolean userExists=this.userRepository.findById(userId).isPresent();
+        if(!userExists){
+            throw new UserNotFoundException(
+                    "The user does not exist"
+            );
+        }
+        boolean exists=this.courseRepository.findById(courseId).isPresent();
+        if(!exists){
               throw new CourseNotFoundException(
                       "Course does not exists");
-          }
+        }
 
+        User actualUser=this.userRepository.findById(userId).get();
+        Course actualCourse=this.courseRepository.findById(courseId).get();
+        actualUser.addCourse(actualCourse);
 
-
+        userRepository.save(actualUser);
+        courseRepository.save(actualCourse);
 
         }
 
+    @Transactional
+    public void deleteCourseForUser(Long userId, Long courseId){
+
+        boolean userExists=this.userRepository.findById(userId).isPresent();
+        if(!userExists){
+            throw new UserNotFoundException(
+                    "The user does not exist"
+            );
+        }
+        boolean exists=this.courseRepository.findById(courseId).isPresent();
+        if(!exists){
+            throw new CourseNotFoundException(
+                    "Course does not exists");
+        }
+
+        User actualUser=this.userRepository.findById(userId).get();
+        Course actualCourse=this.courseRepository.findById(courseId).get();
+        actualUser.removeCourse(actualCourse);
+
+        userRepository.save(actualUser);
+        courseRepository.save(actualCourse);
+
+    }
 
     @Transactional
-    public void addBook(Long id,BookDto bookDto){
-        boolean exists=this.bookRepository.selectedNameExists(bookDto.getBook_name()).isPresent();
+    public void addBookForUser(Long userId, Long bookId){
+        boolean userExists=this.userRepository.findById(userId).isPresent();
+        if(!userExists){
+            throw new UserNotFoundException(
+                    "The user does not exist"
+            );
+        }
+
+        boolean exists=this.bookRepository.findById(bookId).isPresent();
         if(exists){
             throw new BookExistsException(
                     "The book does exist"
             );
         }
 
-         Optional<User> user=this.userRepository.selectedIdExists(bookDto.getUser_id());
+        User actualUser=this.userRepository.findById(userId).get();
+        Book actualBook=this.bookRepository.findById(bookId).get();
+        actualUser.addBook(actualBook);
 
-        if(user.isPresent()){
-
-            User userHelper=user.get();
-
-            modelMapper.getConfiguration()
-                    .setMatchingStrategy(MatchingStrategies.LOOSE);
-
-            Book book= new Book();
-            modelMapper.map(bookDto,book);
-            userHelper.addBook(book);
-            userRepository.save(user.get());
-
-        }else{
-
-            throw new UserNotFoundException(
-                    "User not found"
-            );
-        }
-
+        userRepository.save(actualUser);
     }
 
     @Transactional
-    public void deleteBook(Long id){
+    public void deleteBookForUser(Long userId, Long bookId){
 
-        Optional<Book> book=bookRepository.findById(id);
-        if (book.isPresent()) {
-            bookRepository.deleteById(id);
-
-
-        }else{
-            throw new BookNotFoundException(
-                    "Book not found"
+        boolean userExists=this.userRepository.findById(userId).isPresent();
+        if(!userExists){
+            throw new UserNotFoundException(
+                    "The user does not exist"
             );
         }
 
+        boolean exists=this.bookRepository.findById(bookId).isPresent();
+        if(exists){
+            throw new BookExistsException(
+                    "The book does exist"
+            );
+        }
+
+        User actualUser=this.userRepository.findById(userId).get();
+        Book actualBook=this.bookRepository.findById(bookId).get();
+        actualUser.removeBook(actualBook);
+
+        userRepository.save(actualUser);
+
     }
 
-    public User getUserById( Long id){
+    public User getUserById(Long id){
         if(this.userRepository.findById(id).isEmpty()){
             throw new UserNotFoundException(
                     "User not found "
@@ -160,7 +187,7 @@ public class UserService {
         return this.userRepository.findById(id).get();
     }
 
-    public Book getBookById( Long id){
+    public Book getBookById(Long id){
         if(this.bookRepository.findById(id).isEmpty()){
             throw new BookNotFoundException(
                     "Book not found "
@@ -169,10 +196,60 @@ public class UserService {
         return this.bookRepository.findById(id).get();
     }
 
+    public Course getCourseById(Long id){
+        if(this.courseRepository.findById(id).isEmpty()){
+            throw new CourseExistsException(
+                    "Course not found "
+            );
+        }
+        return this.courseRepository.findById(id).get();
+    }
+
+
+//
+//    @Transactional
+//    public void addBookForUser(UserDto user,BookDto bookDto){
+//        boolean userExists=this.userRepository.selectedEmailExists(user.getEmail()).isPresent();
+//        if(!userExists){
+//            throw new UserNotFoundException(
+//                    "The user does not exist"
+//            );
+//        }
+//
+//        boolean exists=this.bookRepository.selectedNameExists(bookDto.getBook_name()).isPresent();
+//        if(exists){
+//            throw new BookExistsException(
+//                    "The book does exist"
+//            );
+//        }
+//
+//        Optional<User> user=this.userRepository.selectedIdExists(bookDto.getUser_id());
+//
+//        if(user.isPresent()){
+//
+//            User userHelper=user.get();
+//
+//            modelMapper.getConfiguration()
+//                    .setMatchingStrategy(MatchingStrategies.LOOSE);
+//
+//            Book book= new Book();
+//            modelMapper.map(bookDto,book);
+//            userHelper.addBook(book);
+//            userRepository.save(user.get());
+//
+//        }else{
+//
+//            throw new UserNotFoundException(
+//                    "User not found"
+//            );
+//        }
+
+    }
 
 
 
 
 
 
-}
+
+

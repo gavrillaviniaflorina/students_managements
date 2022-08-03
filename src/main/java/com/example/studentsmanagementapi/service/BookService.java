@@ -37,10 +37,16 @@ public class BookService {
             book.setBook_name(updateBook.getBook_name());
             book.setCreated_at(updateBook.getCreated_at());
 
-
             return bookRepository.save(book);
         });
     }
 
-
+    public Book getBookById(Long id){
+        if(this.bookRepository.findById(id).isEmpty()){
+            throw new BookNotFoundException(
+                    "Book not found "
+            );
+        }
+        return this.bookRepository.findById(id).get();
+    }
 }

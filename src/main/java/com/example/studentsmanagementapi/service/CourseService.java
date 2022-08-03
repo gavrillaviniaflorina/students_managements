@@ -2,6 +2,7 @@ package com.example.studentsmanagementapi.service;
 
 
 import com.example.studentsmanagementapi.dto.CourseDto;
+import com.example.studentsmanagementapi.exceptions.CourseExistsException;
 import com.example.studentsmanagementapi.exceptions.CourseNotFoundException;
 import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.repository.CourseRepository;
@@ -21,18 +22,17 @@ public class CourseService {
         return  this.courseRepository.findAll();
     }
 
-//    public void addCourse(CourseDto course){
-//
-//        Boolean exists=this.courseRepository.selectedNameExists(course.getName()).isPresent();
-//
-//        if(exists){
-//            throw  new BadRequestException(
-//                    "Course name "+course.getName()+" taken"
-//            );
-//        }
-//        courseRepository.save(new Course(course.getName(),course.getDepartament()));
-//    }
+    public void addCourse(CourseDto course){
 
+        Boolean exists=this.courseRepository.selectedNameExists(course.getName()).isPresent();
+
+        if(exists) {
+            throw new CourseExistsException(
+                    "Course " + course.getName() + " already exists"
+            );
+        }
+        courseRepository.save(new Course(course.getName(),course.getDepartament()));
+    }
 
     public void deleteCourse(Long id){
         Boolean existsId=this.courseRepository.findById(id).isEmpty();

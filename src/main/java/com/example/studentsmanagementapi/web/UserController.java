@@ -3,6 +3,7 @@ package com.example.studentsmanagementapi.web;
 import com.example.studentsmanagementapi.dto.BookDto;
 import com.example.studentsmanagementapi.dto.UserDto;
 import com.example.studentsmanagementapi.model.Book;
+import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -40,24 +41,37 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @PutMapping("update")
+    @PutMapping("updateUser")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
         this.userService.updateUser(userDto);
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
-    @PostMapping("/addBook")
-    public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto){
-        this.userService.addBook(bookDto);
-        return new ResponseEntity<>(bookDto,HttpStatus.OK);
+    @PostMapping("/addBookForUser/{id}")
+    public ResponseEntity<Book> addBook(@PathVariable Long id,@RequestBody Long bookId){
+        Book book=this.userService.getBookById(bookId);
+        this.userService.addBookForUser(id, bookId);
+        return new ResponseEntity<>(book,HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteBook/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable Long id){
-        Book book=this.userService.getBookById(id);
-        this.userService.deleteBook(id);
+    @DeleteMapping("deleteBookForUser/{id}")
+    public ResponseEntity<Book> deleteBook(@PathVariable Long id, @RequestBody Long bookId){
+        Book book=this.userService.getBookById(bookId);
+        this.userService.deleteBookForUser(id,bookId);
         return new ResponseEntity<>(book, HttpStatus.OK);
+    }
 
+    @PostMapping("/addCourseForUser/{id}")
+    public ResponseEntity<Course> addCourse(@PathVariable Long id, @RequestBody Long courseId){
+        Course course= this.userService.getCourseById(courseId);
+        userService.addCourseForUser(id,courseId);
+        return new ResponseEntity<>(course, HttpStatus.OK);
+    }
 
+    @DeleteMapping("deleteCourseForUser/{id}")
+    public ResponseEntity<Course> deleteCourse(@PathVariable Long id, @RequestBody Long courseId){
+        Course course=this.userService.getCourseById(courseId);
+        this.userService.deleteBookForUser(id,courseId);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 }
