@@ -47,29 +47,29 @@ public class UserController {
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
-    @PostMapping("/addBookForUser/{id}")
-    public ResponseEntity<Book> addBook(@PathVariable Long id,@RequestBody Long bookId){
+    @PostMapping("/addBookForUser/{id}/{bookId}")
+    public ResponseEntity<Book> addBook(@PathVariable Long id,@PathVariable Long bookId){
         Book book=this.userService.getBookById(bookId);
         this.userService.addBookForUser(id, bookId);
         return new ResponseEntity<>(book,HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteBookForUser/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable Long id, @RequestBody Long bookId){
+    @DeleteMapping("deleteBookForUser/{id}/{bookId}")
+    public ResponseEntity<Book> deleteBook(@PathVariable Long id, @PathVariable Long bookId){
         Book book=this.userService.getBookById(bookId);
         this.userService.deleteBookForUser(id,bookId);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @PostMapping("/addCourseForUser/{id}")
-    public ResponseEntity<Course> addCourse(@PathVariable Long id, @RequestBody Long courseId){
+    @PostMapping("/addCourseForUser/{id}/{courseId}")
+    public ResponseEntity<Course> addCourse(@PathVariable Long id, @PathVariable Long courseId){
         Course course= this.userService.getCourseById(courseId);
         userService.addCourseForUser(id,courseId);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteCourseForUser/{id}")
-    public ResponseEntity<Course> deleteCourse(@PathVariable Long id, @RequestBody Long courseId){
+    @DeleteMapping("deleteCourseForUser/{id}/{courseId}")
+    public ResponseEntity<Course> deleteCourse(@PathVariable Long id, @PathVariable Long courseId){
         Course course=this.userService.getCourseById(courseId);
         this.userService.deleteBookForUser(id,courseId);
         return new ResponseEntity<>(course, HttpStatus.OK);

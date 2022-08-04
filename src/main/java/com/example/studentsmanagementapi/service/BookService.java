@@ -1,7 +1,7 @@
 package com.example.studentsmanagementapi.service;
 
-
 import com.example.studentsmanagementapi.dto.BookDto;
+import com.example.studentsmanagementapi.exceptions.BookExistsException;
 import com.example.studentsmanagementapi.exceptions.BookNotFoundException;
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.repository.BookRepository;
@@ -20,6 +20,29 @@ public class BookService {
 
     public List<Book> getAll(){
         return bookRepository.findAll();
+    }
+
+
+    public void addBook(BookDto book){
+        boolean exists=this.bookRepository.selectedNameExists(book.getBook_name()).isPresent();
+
+        if(exists){
+            throw new BookExistsException(
+                    "The book already exists"
+            );
+        }
+        this.bookRepository.save(new Book(book.getBook_name(),book.getCreated_at()));
+    }
+
+    public void deleteBook(Long id){
+        boolean exists=this.bookRepository.findById(id).isPresent();
+
+        if(!exists){
+            throw new BookNotFoundException(
+                    "The book does not exist"
+            );
+        }
+        this.bookRepository.deleteById(id);
     }
 
     public void updateBook(BookDto updateBook){

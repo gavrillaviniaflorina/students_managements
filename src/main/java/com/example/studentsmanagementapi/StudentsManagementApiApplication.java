@@ -39,13 +39,13 @@ public class StudentsManagementApiApplication {
 //            }
 //
 //
-          User user=userRepository.findById(17L).get();
+//          User user=userRepository.findById(17L).get();
 //
 //            for(int i=0;i<10;i++){
 //
 //                LocalDate date=LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
 //                Book book=new Book(faker.book().title(),date);
-//                user.addBook(book);
+//                bookRepository.save(book);
 //
 //            }
 //
@@ -69,10 +69,7 @@ public class StudentsManagementApiApplication {
 //
 //                courseRepository.save(course);
 //            }
-//
-            user.addCourse(courseRepository.findById(13L).get());
 
-            userRepository.save(user);
 
         };
     }

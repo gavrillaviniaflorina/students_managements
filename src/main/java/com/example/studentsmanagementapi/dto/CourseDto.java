@@ -1,31 +1,28 @@
 package com.example.studentsmanagementapi.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CourseDto {
 
-    private String Name;
-    private String Departament;
-
-    public CourseDto(String name, String departament) {
-        Name = name;
-        Departament = departament;
-    }
+    private String name;
+    private String departament;
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getDepartament() {
-        return Departament;
+        return departament;
     }
 
     public void setDepartament(String departament) {
-        Departament = departament;
+        this.departament = departament;
     }
 }

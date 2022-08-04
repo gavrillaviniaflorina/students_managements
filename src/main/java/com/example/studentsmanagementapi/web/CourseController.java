@@ -23,11 +23,26 @@ public class CourseController {
     public ResponseEntity<List<Course>> getCourses(){
         return new ResponseEntity<>(this.courseService.getAll(), HttpStatus.OK);
     }
+    @PostMapping("/addCourse")
+    public ResponseEntity<Course> addCourse(CourseDto courseDto){
+        courseService.addCourse(courseDto);
+        Course course= this.courseService.getCourseByName(courseDto.getName());
+        return new ResponseEntity<>(course, HttpStatus.OK);
+    }
 
-    @PutMapping("update")
+    @DeleteMapping("deleteCourse/{id}")
+    public ResponseEntity<Course> deleteCourse(@PathVariable Long id){
+        Course course=this.courseService.getCourseById(id);
+        this.courseService.deleteCourse(id);
+        return new ResponseEntity<>(course, HttpStatus.OK);
+    }
+
+    @PutMapping("updateCourse")
     public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseDto){
         this.courseService.updateCourse(courseDto);
         return new ResponseEntity<>(courseDto,HttpStatus.OK);
     }
+
+
 
 }

@@ -35,17 +35,15 @@ public class UserService {
         return  this.userRepository.findAll();
     }
 
-    @Transactional
+
     public void addUser(UserDto user){
 
         boolean userExists= this.userRepository.selectedEmailExists(user.getEmail()).isPresent();
 
         if(userExists){
-            throw new UserNotFoundException("User not found");
+            throw new UserExistsException("User exists");
         }
-
-        User userSaved=this.userRepository.selectedEmailExists(user.getEmail()).get();
-        this.userRepository.save(userSaved);
+        this.userRepository.save(new User(user.getName(),user.getEmail(),user.getPassword()));
     }
 
     @Transactional
@@ -65,7 +63,7 @@ public class UserService {
 
         Boolean userExists = this.userRepository.selectedEmailExists(userDto.getEmail()).isPresent();
 
-        if (userExists) {
+        if (!userExists) {
             throw new UserNotFoundException(
                     "User not found"
             );
@@ -140,7 +138,7 @@ public class UserService {
         }
 
         boolean exists=this.bookRepository.findById(bookId).isPresent();
-        if(exists){
+        if(!exists){
             throw new BookExistsException(
                     "The book does exist"
             );
@@ -164,7 +162,7 @@ public class UserService {
         }
 
         boolean exists=this.bookRepository.findById(bookId).isPresent();
-        if(exists){
+        if(!exists){
             throw new BookExistsException(
                     "The book does exist"
             );

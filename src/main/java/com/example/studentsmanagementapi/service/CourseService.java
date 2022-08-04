@@ -8,6 +8,7 @@ import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 @Service
 public class CourseService {
@@ -22,6 +23,7 @@ public class CourseService {
         return  this.courseRepository.findAll();
     }
 
+    @Transactional
     public void addCourse(CourseDto course){
 
         Boolean exists=this.courseRepository.selectedNameExists(course.getName()).isPresent();
@@ -35,6 +37,7 @@ public class CourseService {
     }
 
     public void deleteCourse(Long id){
+
         Boolean existsId=this.courseRepository.findById(id).isEmpty();
 
         if(existsId){
@@ -47,10 +50,9 @@ public class CourseService {
 
     public void updateCourse(CourseDto updateCourse){
 
-
         Boolean exists=this.courseRepository.selectedNameExists(updateCourse.getName()).isPresent();
 
-        if(exists){
+        if(!exists){
             throw new CourseNotFoundException(
                     "Course not found"
             );
@@ -62,6 +64,24 @@ public class CourseService {
 
             return courseRepository.save(course);
         });
+    }
+
+    public Course getCourseByName(String name){
+        if(this.courseRepository.selectedNameExists(name).isEmpty()){
+            throw new CourseExistsException(
+                    "Course not found"
+            );
+        }
+        return this.courseRepository.selectedNameExists(name).get();
+    }
+
+    public Course getCourseById(Long id){
+        if(this.courseRepository.findById(id).isEmpty()){
+            throw new CourseExistsException(
+                    "Course not found "
+            );
+        }
+        return this.courseRepository.findById(id).get();
     }
 
 }
