@@ -24,7 +24,7 @@ public class CourseController {
         return new ResponseEntity<>(this.courseService.getAll(), HttpStatus.OK);
     }
     @PostMapping("/addCourse")
-    public ResponseEntity<Course> addCourse(CourseDto courseDto){
+    public ResponseEntity<Course> addCourse(@RequestBody CourseDto courseDto){
         courseService.addCourse(courseDto);
         Course course= this.courseService.getCourseByName(courseDto.getName());
         return new ResponseEntity<>(course, HttpStatus.OK);
