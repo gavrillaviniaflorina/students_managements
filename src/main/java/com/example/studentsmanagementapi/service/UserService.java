@@ -139,7 +139,7 @@ public class UserService {
 
         boolean exists=this.bookRepository.findById(bookId).isPresent();
         if(!exists){
-            throw new BookExistsException(
+            throw new BookNotFoundException(
                     "The book does exist"
             );
         }
@@ -163,8 +163,8 @@ public class UserService {
 
         boolean exists=this.bookRepository.findById(bookId).isPresent();
         if(!exists){
-            throw new BookExistsException(
-                    "The book does exist"
+            throw new BookNotFoundException(
+                    "The book does not exist"
             );
         }
 
@@ -172,7 +172,8 @@ public class UserService {
         Book actualBook=this.bookRepository.findById(bookId).get();
         actualUser.removeBook(actualBook);
 
-        userRepository.save(actualUser);
+        actualBook.setUser(null);
+        bookRepository.save(actualBook);
 
     }
 

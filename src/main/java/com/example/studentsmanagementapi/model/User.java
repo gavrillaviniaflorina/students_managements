@@ -113,7 +113,7 @@ public class User {
     }
 
     public void removeBook(Book book){
-         this.enrolledCourses.removeIf(b->b.getId()==book.getId());
+         this.books.remove(book.getId());
     }
 
     public long getId() {
