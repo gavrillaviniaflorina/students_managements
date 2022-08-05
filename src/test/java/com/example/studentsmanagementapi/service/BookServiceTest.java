@@ -106,31 +106,54 @@ class BookServiceTest {
 
                 assertThatThrownBy(()->underTest.deleteBook(book.getId())).isInstanceOf(BookNotFoundException.class).hasMessageContaining("The book does not exist");
             }
-//
-//    @Test
-//        void ItShouldUpdateUser(){
-//                Faker faker=new Faker();
-//
-//                UserDto user=new UserDto("lavinia","lavinia.Fay@mycode.edu","ceva");
-//
-//                User userHelper=new User(user.getName(),user.getEmail(),user.getPassword());
-//                userHelper.setId(1L);
-//                doReturn(Optional.of(userHelper)).when(userRepository).selectedEmailExists(user.getEmail());
-//                doReturn(Optional.of(userHelper)).when(userRepository).findById(1L);
-//                underTest.updateUser(user);
-//                BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
-//
-//                User userCapture=userArgumentCaptor.getValue();
-//
-//                assertThat(userCapture).isEqualTo(userHelper);
-//
-//                }
-//
-//    @Test
-//        void ItShouldThrowAnExceptionWhenUpdatingAnUser(){
-//                UserDto userDto=new UserDto("ceva","as@gmail.com","aqee1");
-//                doReturn(Optional.empty()).when(userRepository).selectedEmailExists(userDto.getEmail());
-//
-//                assertThatThrownBy(()->underTest.updateUser(userDto)).isInstanceOf(UserNotFoundException.class).hasMessageContaining("User not found");
-//            }
+
+    @Test
+        void ItShouldUpdateBook(){
+                Faker faker=new Faker();
+
+        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
+        BookDto book=new BookDto("lavinia", date, null);
+
+        Book bookHelper=new Book(book.getBook_name(), book.getCreated_at());
+                bookHelper.setId(1L);
+                doReturn(Optional.of(bookHelper)).when(bookRepository).selectedNameExists(book.getBook_name());
+                doReturn(Optional.of(bookHelper)).when(bookRepository).findById(1L);
+                underTest.updateBook(book);
+                then(bookRepository).should().save(bookArgumentCaptor.capture());
+
+                Book bookCaptor=bookArgumentCaptor.getValue();
+
+                assertThat(bookCaptor).isEqualTo(bookHelper);
+
+                }
+
+    @Test
+        void ItShouldThrowAnExceptionWhenUpdatingABook(){
+
+        Faker faker=new Faker();
+
+        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
+        BookDto book=new BookDto("lavinia", date, null);
+
+        Book bookHelper=new Book(book.getBook_name(), book.getCreated_at());
+        bookHelper.setId(1L);
+        doReturn(Optional.empty()).when(bookRepository).selectedNameExists(book.getBook_name());
+        doReturn(Optional.empty()).when(bookRepository).findById(1L);
+                assertThatThrownBy(()->underTest.updateBook(book)).isInstanceOf(BookNotFoundException.class).hasMessageContaining("Book not found");
+            }
+
+    @Test
+        void ItShouldGetBookById(){
+        Faker faker=new Faker();
+        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
+        Book book=new Book("lavinia", date);
+        book.setId(1L);
+
+        doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
+
+
+
+
+
+    }
 }

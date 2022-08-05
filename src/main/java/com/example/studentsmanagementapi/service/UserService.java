@@ -186,62 +186,6 @@ public class UserService {
         return this.userRepository.findById(id).get();
     }
 
-    public Book getBookById(Long id){
-        if(this.bookRepository.findById(id).isEmpty()){
-            throw new BookNotFoundException(
-                    "Book not found "
-            );
-        }
-        return this.bookRepository.findById(id).get();
-    }
-
-    public Course getCourseById(Long id){
-        if(this.courseRepository.findById(id).isEmpty()){
-            throw new CourseExistsException(
-                    "Course not found "
-            );
-        }
-        return this.courseRepository.findById(id).get();
-    }
-
-
-//
-//    @Transactional
-//    public void addBookForUser(UserDto user,BookDto bookDto){
-//        boolean userExists=this.userRepository.selectedEmailExists(user.getEmail()).isPresent();
-//        if(!userExists){
-//            throw new UserNotFoundException(
-//                    "The user does not exist"
-//            );
-//        }
-//
-//        boolean exists=this.bookRepository.selectedNameExists(bookDto.getBook_name()).isPresent();
-//        if(exists){
-//            throw new BookExistsException(
-//                    "The book does exist"
-//            );
-//        }
-//
-//        Optional<User> user=this.userRepository.selectedIdExists(bookDto.getUser_id());
-//
-//        if(user.isPresent()){
-//
-//            User userHelper=user.get();
-//
-//            modelMapper.getConfiguration()
-//                    .setMatchingStrategy(MatchingStrategies.LOOSE);
-//
-//            Book book= new Book();
-//            modelMapper.map(bookDto,book);
-//            userHelper.addBook(book);
-//            userRepository.save(user.get());
-//
-//        }else{
-//
-//            throw new UserNotFoundException(
-//                    "User not found"
-//            );
-//        }
 
     }
 

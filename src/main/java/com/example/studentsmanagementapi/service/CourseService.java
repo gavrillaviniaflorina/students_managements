@@ -30,7 +30,7 @@ public class CourseService {
 
         if(exists) {
             throw new CourseExistsException(
-                    "Course " + course.getName() + " already exists"
+                    "The course already exists"
             );
         }
         courseRepository.save(new Course(course.getName(),course.getDepartament()));

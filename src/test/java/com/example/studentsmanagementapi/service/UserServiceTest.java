@@ -2,9 +2,11 @@ package com.example.studentsmanagementapi.service;
 
 import com.example.studentsmanagementapi.dto.UserDto;
 import com.example.studentsmanagementapi.exceptions.BookNotFoundException;
+import com.example.studentsmanagementapi.exceptions.CourseNotFoundException;
 import com.example.studentsmanagementapi.exceptions.UserExistsException;
 import com.example.studentsmanagementapi.exceptions.UserNotFoundException;
 import com.example.studentsmanagementapi.model.Book;
+import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.repository.BookRepository;
 import com.example.studentsmanagementapi.repository.CourseRepository;
@@ -36,6 +38,9 @@ class UserServiceTest {
 
     @Captor
     private ArgumentCaptor<User> userArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<Course>  courseArgumentCaptor;
+
 
 
 
@@ -185,22 +190,21 @@ class UserServiceTest {
 
         assertThatThrownBy(()->underTest.addBookForUser(user.getId(),book.getId())).isInstanceOf(BookNotFoundException.class).hasMessageContaining("The book does exist");
     }
-//
-//    @Test
-//    void ItShouldDeleteBookForUser(){
-//        User user=new User("ceva","as@gmail.com","aqee1");
-//        user.setId(1L);
-//        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
-//
-//        Faker faker=new Faker();
-//        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-//        Book book =new Book("a",date);
-//        book.setId(1L);
-//        doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
-//
-//        underTest.deleteBookForUser(user.getId(),book.getId());
-//        BDDMockito.then(bookRepository).should().deleteById(book.getId());
-//    }
+
+    @Test
+    void IsShouldDeleteBookForUser(){
+        User user=new User("ceva","as@gmail.com","aqee1");
+        user.setId(1L);
+        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
+
+        Faker faker=new Faker();
+        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
+        Book book =new Book("a",date);
+        book.setId(1L);
+        doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
+        underTest.deleteBookForUser(user.getId(),book.getId());
+
+    }
 
     @Test
     void ItShouldThrowUserNotFoundExceptionWhenDeletingBookForUser(){
@@ -231,4 +235,98 @@ class UserServiceTest {
 
         assertThatThrownBy(()->underTest.deleteBookForUser(user.getId(),book.getId())).isInstanceOf(BookNotFoundException.class).hasMessageContaining("The book does not exist");
     }
+
+    @Test
+    void ItShouldAddCourseForUser(){
+        User user=new User("ceva","as@gmail.com","aqee1");
+        user.setId(1L);
+        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
+
+        Course course =new Course("a","ceva");
+        course.setId(1L);
+        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
+
+        underTest.addCourseForUser(user.getId(),course.getId());
+        BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
+
+        User user1=userArgumentCaptor.getValue();
+
+        assertThat(user1).isEqualTo(user);
+    }
+
+    @Test
+    void ItShouldThrowUserNotFoundExceptionWhenAddingACourseForAUser(){
+        User user=new User("ceva","as@gmail.com","aqee1");
+        user.setId(1L);
+        doReturn(Optional.empty()).when(userRepository).findById(user.getId());
+
+        Course course =new Course("a","ceva");
+        course.setId(1L);
+        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
+
+        assertThatThrownBy(()->underTest.addCourseForUser(user.getId(),course.getId())).isInstanceOf(UserNotFoundException.class).hasMessageContaining("The user does not exist");
+    }
+
+    @Test
+    void ItShouldThrowCourseNotFoundExceptionWhenAddingACourseForAUser(){
+        User user=new User("ceva","as@gmail.com","aqee1");
+        user.setId(1L);
+        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
+
+        Course course =new Course("a","ceva");
+        course.setId(1L);
+        doReturn(Optional.empty()).when(courseRepository).findById(course.getId());
+
+        assertThatThrownBy(()->underTest.addCourseForUser(user.getId(),course.getId())).isInstanceOf(CourseNotFoundException.class).hasMessageContaining("Course does not exists");
+    }
+
+    @Test
+    void IsShouldDeleteCourseForUser(){
+        User user=new User("ceva","as@gmail.com","aqee1");
+        user.setId(1L);
+        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
+
+        Course course =new Course("a","ceva");
+        course.setId(1L);
+        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
+
+        underTest.deleteCourseForUser(user.getId(),course.getId());
+        BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
+        BDDMockito.then(courseRepository).should().save(courseArgumentCaptor.capture());
+
+        User user1=userArgumentCaptor.getValue();
+        Course course1=courseArgumentCaptor.getValue();
+        assertThat(user1).isEqualTo(user);
+        assertThat(course1).isEqualTo(course);
+
+    }
+
+    @Test
+    void ItShouldThrowUserNotFoundExceptionWhenDeletingCourseForUser(){
+        User user=new User("ceva","as@gmail.com","aqee1");
+        user.setId(1L);
+        doReturn(Optional.empty()).when(userRepository).findById(user.getId());
+
+        Course course =new Course("a","ceva");
+        course.setId(1L);
+        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
+
+
+        assertThatThrownBy(()->underTest.deleteCourseForUser(user.getId(),course.getId())).isInstanceOf(UserNotFoundException.class).hasMessageContaining("The user does not exist");
+    }
+
+    @Test
+    void ItShouldThrowCourseNotFoundExceptionWhenDeletingACourseForAUser(){
+        User user=new User("ceva","as@gmail.com","aqee1");
+        user.setId(1L);
+        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
+
+        Course course =new Course("a","ceva");
+        course.setId(1L);
+        doReturn(Optional.empty()).when(courseRepository).findById(course.getId());
+
+
+        assertThatThrownBy(()->underTest.deleteCourseForUser(user.getId(),course.getId())).isInstanceOf(CourseNotFoundException.class).hasMessageContaining("Course does not exists");
+    }
+
 }
