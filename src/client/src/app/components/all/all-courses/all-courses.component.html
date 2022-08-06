@@ -1,0 +1,7 @@
+<app-header></app-header>
+
+<main class="row g-2">
+    <app-course *ngFor="let c of courses" [course]="c"></app-course>
+</main>
+
+<button class="btn btn-primary">Add Course</button>
