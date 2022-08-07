@@ -43,6 +43,12 @@ public class CourseController {
         return new ResponseEntity<>(courseDto,HttpStatus.OK);
     }
 
+    @GetMapping("findCourseById/{id}")
+    public ResponseEntity<Course> findCourseById(@PathVariable Long id){
+       return new ResponseEntity<>(this.courseService.getCourseById(id), HttpStatus.OK);
+    }
+
+
 
 
 }

@@ -15,7 +15,8 @@ import { AllUsersComponent } from './components/all/all-users/all-users.componen
 import { AllCoursesComponent } from './components/all/all-courses/all-courses.component';
 import { CourseDetailsComponent } from './components/details/course-details/course-details.component';
 import { BookDetailsComponent } from './components/details/book-details/book-details.component';
-import { NewCourseComponent } from './components/new/new-course/new-course.component';
+import { NewCourseComponent } from './components/add/new-course/new-course.component';
+
 
 @NgModule({
   declarations: [

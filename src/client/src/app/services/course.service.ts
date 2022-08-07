@@ -24,4 +24,9 @@ export class CourseService {
       })
     )
    }
+
+   findCourseById(id:number):Observable<Course>{
+    return this.http.get<Course>(this.api+`/findCourseById/${id}`);
+   }
+
 }

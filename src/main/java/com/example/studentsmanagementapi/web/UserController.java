@@ -82,4 +82,10 @@ public class UserController {
         this.userService.deleteBookForUser(id,courseId);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
+
+    @GetMapping("getCoursesOfUser/{id}")
+    public ResponseEntity<List<Course>> enrolledCoursesForUser(@PathVariable Long id){
+       User user=this.userService.getUserById(id);
+       return new ResponseEntity<>(user.getEnrolledCourses(), HttpStatus.OK);
+    }
 }

@@ -30,36 +30,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-//@TestPropertySource(
-//        locations = "classpath:application-it.properties"
-//)
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = StudentsManagementApiApplication.class)
-//@AutoConfigureMockMvc
+@TestPropertySource(
+        locations = "classpath:application-it.properties"
+)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = StudentsManagementApiApplication.class)
+@AutoConfigureMockMvc
 class UserControllerTest {
-//
-//    @MockBean
-//    private UserRepository movieRepositoryMock;
-//
-//    @MockBean
-//    private UserService movieServiceMock;
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Test
-//    void getUsers() throws Exception {
-//
-//        List<User> users=new ArrayList<>();
-//        User user=new User("test1","autor1","gen1");
-//        users.add(user);
-//        when(movieServiceMock.getAll()).thenReturn(users);
-//
-//        ObjectMapper mapper=new ObjectMapper();
-//        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users")
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(mapper.writeValueAsString(users)));
-//
-//    }
+
+    @MockBean
+    private UserRepository movieRepositoryMock;
+
+    @MockBean
+    private UserService movieServiceMock;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void getUsers() throws Exception {
+
+        List<User> users=new ArrayList<>();
+        User user=new User("test1","autor1","gen1");
+        users.add(user);
+        when(movieServiceMock.getAll()).thenReturn(users);
+
+        ObjectMapper mapper=new ObjectMapper();
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(users)));
+
+    }
 }
