@@ -1,7 +1,11 @@
-<div class="col  border border-primary" [routerLink]="'course-details/'+[course.id]">
+<div class="card col-11 border border-primary m-5 d-flex align-items-center" style="width: 18rem; height: 10rem;;" [routerLink]="'course-details/'+[course.id]">
 
-    <h5 class="card-title">{{course.name}}</h5>
-    <p class="card-text">{{course.departament}}</p>
-    <a href="#" class="btn btn-primary">See course</a>
+    <div class="card-header" style="width: 18rem;">
+        Course
+    </div>
+    <div class="card-body justify-content-start m-0">
+        <h5 class="card-title">{{course.name}}</h5>
+        <p class="card-text">{{course.departament}}</p>
+    </div>
 
 </div>

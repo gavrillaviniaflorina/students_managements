@@ -1,6 +1,7 @@
 package com.example.studentsmanagementapi;
 
 
+import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.repository.BookRepository;
 import com.example.studentsmanagementapi.repository.CourseRepository;
 import com.example.studentsmanagementapi.repository.UserRepository;
