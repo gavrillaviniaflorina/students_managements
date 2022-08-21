@@ -1,5 +1,9 @@
 <app-header></app-header>
-<button type="button" class="btn btn-primary" (click)="JoinCourse()">Join course</button>
+<div class="d-flex flex-row justify-content-start">
+    <button *ngIf="!isEnrolled" type="button" class="btn btn-primary mx-3" (click)="JoinCourse()">Join course</button>
+    <button *ngIf="isEnrolled" type="button" class="btn btn-danger" (click)="LeaveCourse()">Leave course</button>
+</div>
+
 <main class="m-5">
     <h3>Course Detail</h3>
 

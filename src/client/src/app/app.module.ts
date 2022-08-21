@@ -16,6 +16,8 @@ import { AllCoursesComponent } from './components/all/all-courses/all-courses.co
 import { CourseDetailsComponent } from './components/details/course-details/course-details.component';
 import { BookDetailsComponent } from './components/details/book-details/book-details.component';
 import { NewCourseComponent } from './components/add/new-course/new-course.component';
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { NewCourseComponent } from './components/add/new-course/new-course.compo
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
