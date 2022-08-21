@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDropdownComponent implements OnInit {
 
+  userId:number=4;
   constructor() { }
 
   ngOnInit(): void {
+    
   }
 
 }

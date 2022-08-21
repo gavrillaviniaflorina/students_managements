@@ -13,11 +13,7 @@ private api=environment.api+"/api/v1/students";
 public usersChanged=new BehaviorSubject<User[]>([]);
 public enroledCourses= new BehaviorSubject<Course[]>([]);
 
-  constructor(private http:HttpClient) { 
-
-
-     
-  }
+  constructor(private http:HttpClient) { }
 
   addCourseForUser(userId:number, courseId:number):Observable<Course>{
 

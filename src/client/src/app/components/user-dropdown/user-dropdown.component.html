@@ -1,10 +1,10 @@
-<div class="dropdown ">
-    <i class=" bi bi-person-circle  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    
-    </i>
+<div class="dropdown mr-5">
+    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="bi bi-person-circle"></i>
+      </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">User Profile</a>
-        <a class="dropdown-item" href="#">My Books</a>
-        <a class="dropdown-item" href="#">My Courses</a>
+        <div class="dropdown-item">User Profile</div>
+        <div class="dropdown-item">My Books</div>
+        <div class="dropdown-item" [routerLink]="'my-courses/'+[userId]">My Courses</div>
     </div>
 </div>
