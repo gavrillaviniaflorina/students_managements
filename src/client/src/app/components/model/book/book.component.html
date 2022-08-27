@@ -1,1 +1,11 @@
-<p>book works!</p>
+<div class="book card col-11  m-5 d-flex align-items-center" style="width: 18rem; height: 10rem;;" [routerLink]="'course-details/'+[book.id]+'/'+[isBooked]">
+
+    <div class="card-header" style="width: 112%">
+        Book
+    </div>
+    <div class="card-body justify-content-start m-0">
+        <h5 class="card-title">{{book.bookName}}</h5>
+        <p class="card-text">{{book.createdAt}}</p>
+    </div>
+
+</div>

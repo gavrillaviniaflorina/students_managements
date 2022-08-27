@@ -1,4 +1,9 @@
 .header {
-    border: 2px solid black;
+    background-color: #ef9273;
+    color: white;
     margin-bottom: 20px;
+    padding: 20px;
+    & .options {
+        color: white;
+    }
 }

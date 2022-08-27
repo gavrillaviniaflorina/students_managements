@@ -19,6 +19,7 @@ import { NewCourseComponent } from './components/add/new-course/new-course.compo
 import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { UserCoursesComponent } from './components/forUser/user-courses/user-courses.component';
+import { AllBooksComponent } from './components/all/all-books/all-books.component';
 
 
 
@@ -38,6 +39,7 @@ import { UserCoursesComponent } from './components/forUser/user-courses/user-cou
     BookDetailsComponent,
     NewCourseComponent,
     UserCoursesComponent,
+    AllBooksComponent,
   ],
   imports: [
     BrowserModule,

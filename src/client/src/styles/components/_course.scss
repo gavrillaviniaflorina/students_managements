@@ -1,0 +1,7 @@
+.course {
+    border: 2px solid black;
+    & .card-header {
+        background-color: #ef9273;
+        color: white;
+    }
+}

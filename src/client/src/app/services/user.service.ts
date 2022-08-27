@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Book } from '../models/book';
 import { Course } from '../models/course';
 import { User } from '../models/user';
 
@@ -12,6 +13,7 @@ export class UserService {
 private api=environment.api+"/api/v1/students";
 public usersChanged=new BehaviorSubject<User[]>([]);
 public enroledCourses= new BehaviorSubject<Course[]>([]);
+public bookedBooks= new BehaviorSubject<Book[]>([]);
 
   constructor(private http:HttpClient) { }
 
@@ -23,6 +25,12 @@ public enroledCourses= new BehaviorSubject<Course[]>([]);
   getEnrolledCoursesForUser(id:number):Observable<Course[]>{
     return this.http.get<Course[]>(this.api+`/getCoursesOfUser/${id}`).pipe(tap((response:Course[])=>{
       this.enroledCourses.next(response);
+    },console.log),catchError(this.handleError)); 
+  }
+
+  getBookedBooksForUser(id:number):Observable<Book[]>{
+    return this.http.get<Book[]>(this.api+`/getBooksOfUser/${id}`).pipe(tap((response:Book[])=>{
+      this.bookedBooks.next(response);
     },console.log),catchError(this.handleError)); 
   }
 

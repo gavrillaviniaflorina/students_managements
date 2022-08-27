@@ -29,9 +29,6 @@ export class CourseDetailsComponent implements OnInit {
     this.route.params.subscribe(params=>{
       this.id=params['id'];
       this.isEnrolled= params['isEnrolled']=="true";
-      console.log(params['isEnrolled']);
-      console.log(this.isEnrolled);
-
       this.courseService.findCourseById(+this.id).subscribe(response=>{
         this.course=response;
       })
@@ -53,15 +50,4 @@ export class CourseDetailsComponent implements OnInit {
       this.notificationService.onSuccess("You leaved this course");
     })
   }
-
-  
-  public warrning(){
-    this.notificationService.onWarning("You are already enrolled to this course");
-  }
-
-  
-
-
-  
-
 }
