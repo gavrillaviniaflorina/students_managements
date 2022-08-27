@@ -97,6 +97,11 @@ public class UserService {
 
         User actualUser=this.userRepository.findById(userId).get();
         Course actualCourse=this.courseRepository.findById(courseId).get();
+
+        if(actualUser.getEnrolledCourses().contains(actualCourse)){
+            throw new CourseExistsException("You are already enrolled to this course");
+        }
+
         actualUser.addCourse(actualCourse);
 
         userRepository.save(actualUser);
@@ -121,6 +126,9 @@ public class UserService {
 
         User actualUser=this.userRepository.findById(userId).get();
         Course actualCourse=this.courseRepository.findById(courseId).get();
+        if(!actualUser.getEnrolledCourses().contains(actualCourse)){
+            throw new CourseNotFoundException("You are not enrolled to this course");
+        }
         actualUser.removeCourse(actualCourse);
 
         userRepository.save(actualUser);

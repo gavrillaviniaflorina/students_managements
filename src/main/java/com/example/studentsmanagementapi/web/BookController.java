@@ -3,9 +3,7 @@ package com.example.studentsmanagementapi.web;
 
 
 import com.example.studentsmanagementapi.dto.BookDto;
-import com.example.studentsmanagementapi.dto.UserDto;
 import com.example.studentsmanagementapi.model.Book;
-import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +44,10 @@ public class BookController {
     public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto){
         this.bookService.updateBook(bookDto);
         return new ResponseEntity<>(bookDto,HttpStatus.OK);
+    }
+
+    @GetMapping("findBookById/{id}")
+    public ResponseEntity<Book> findBookById(@PathVariable Long id){
+        return new ResponseEntity<>(this.bookService.getBookById(id), HttpStatus.OK);
     }
 }

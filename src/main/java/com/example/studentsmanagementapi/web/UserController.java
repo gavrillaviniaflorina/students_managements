@@ -8,6 +8,7 @@ import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.service.BookService;
 import com.example.studentsmanagementapi.service.CourseService;
 import com.example.studentsmanagementapi.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("api/v1/students")
 @RestController
 @CrossOrigin
+@Slf4j
 public class UserController {
 
     private UserService userService;
@@ -79,13 +81,21 @@ public class UserController {
     @DeleteMapping("deleteCourseForUser/{id}/{courseId}")
     public ResponseEntity<Course> deleteCourse(@PathVariable Long id, @PathVariable Long courseId){
         Course course=this.courseService.getCourseById(courseId);
-        this.userService.deleteBookForUser(id,courseId);
+        this.userService.deleteCourseForUser(id,courseId);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
     @GetMapping("getCoursesOfUser/{id}")
     public ResponseEntity<List<Course>> enrolledCoursesForUser(@PathVariable Long id){
+        log.info("Rest request for enrolled course");
        User user=this.userService.getUserById(id);
        return new ResponseEntity<>(user.getEnrolledCourses(), HttpStatus.OK);
+    }
+
+    @GetMapping("getBooksOfUser/{id}")
+    public ResponseEntity<List<Book>> ebookedBooksForUser(@PathVariable Long id){
+        log.info("Rest request for enrolled course");
+        User user=this.userService.getUserById(id);
+        return new ResponseEntity<>(user.getBooks(), HttpStatus.OK);
     }
 }
