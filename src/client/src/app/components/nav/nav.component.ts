@@ -23,6 +23,11 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/books']);
   }
 
+  public goToUsers(): void {
+   
+    this.router.navigate(['/users']);
+  }
+
 
 
 }

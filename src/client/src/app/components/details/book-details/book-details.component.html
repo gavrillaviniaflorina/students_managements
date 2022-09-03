@@ -1,1 +1,19 @@
-<p>book-details works!</p>
+<app-header></app-header>
+<div class="d-flex flex-row justify-content-start ml-5">
+    <button *ngIf="!isBooked" type="button" class="btn btn-primary" (click)="takeBook()">Take it</button>
+    <button *ngIf="isBooked" type="button" class="btn btn-danger" (click)="returnBook()">Return it</button>
+</div>
+
+<main class="m-5">
+    <h3>Book Detail</h3>
+
+    <h3>Book name : {{book.book_name}}</h3>
+
+    <p>Created at : {{book.created_at}}</p>
+
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla quaerat natus tempore corrupti totam non quas perspiciatis repellat corporis neque hic ab animi harum, quo nisi? Nihil tenetur dolores laboriosam laborum minima autem eius, molestias
+        enim ratione omnis ullam, fuga cumque architecto hic, ut amet. Tempore nisi saepe tenetur laborum, voluptatibus perspiciatis officia quas. Numquam fuga quae reprehenderit commodi nisi fugiat, mollitia magnam ad animi ab assumenda maiores accusantium
+        laboriosam? Nam natus, nemo, a voluptas eaque veritatis ipsam ipsum, suscipit non laboriosam voluptates dolorum expedita obcaecati. Ea deleniti illum aliquam dicta similique recusandae consequuntur sed beatae, sapiente nihil cumque quaerat?</p>
+
+
+</main>

@@ -11,7 +11,10 @@ export class UserComponent implements OnInit {
   constructor() { }
 //@ts-ignore
 @Input() user:User={
-  
+  id:0,
+  name:"",
+  email:"",
+  password:"",
 }
 
   ngOnInit(): void {

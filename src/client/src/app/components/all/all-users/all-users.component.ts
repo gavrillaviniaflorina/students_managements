@@ -8,14 +8,13 @@ import { UserServiceService } from '../../../services/user-service.service';
   styleUrls: ['./all-users.component.sass']
 })
 export class AllUsersComponent implements OnInit {
-
   public users:User[]=[];
   constructor(private userService:UserServiceService) { }
 
   ngOnInit(): void {
-  
     this.userService.usersChanged.subscribe(response=>{
-      this.users=[...response];
+      this.users=[...response]; 
+      console.log(response); 
     })
   }
 

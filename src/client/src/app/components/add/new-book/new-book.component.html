@@ -1,14 +1,16 @@
 <app-header></app-header>
 <main class="d-flex flex-column align-self-center">
 
-    <form [formGroup]="courseForm" class="d-flex flex-column m-auto" style="width: 50%;">
-        <h1 class="my-5">New Course </h1>
+    <form [formGroup]="bookForm" class="d-flex flex-column m-auto" style="width: 50%;">
+        <h1 class="my-5">New Book </h1>
 
         <label for="name">Name</label>
         <input class="name" formControlName="name">
 
-        <label for="departament">Director</label>
-        <input class="departament" formControlName="departament">
+        <label for="created">Created at</label>
+
+        <input data-provide="datepicker" class="created" formControlName="created">
+
 
         <div class="d-flex flex-row mt-3 justify-content-end">
             <button (click)="onClick($event) " class="btn btn-primary mr-3">Create</button>

@@ -1,5 +1,5 @@
 export interface Book{
     id:number,
-    bookName:string,
-    createdAt:string
+    book_name:string,
+    created_at:string
 }

@@ -25,8 +25,13 @@ export class BookService {
     )
    }
 
-   findCourseById(id:number):Observable<Book>{
+   findBookById(id:number):Observable<Book>{
     return this.http.get<Book>(this.api+`/findBookById/${id}`);
+   }
+
+   addBook(book:Book):Observable<Book>{
+    this.booksChanged.next([...this.booksChanged.value,book]);
+    return this.http.post<Book>(this.api+"/addBook",book);
    }
 
 

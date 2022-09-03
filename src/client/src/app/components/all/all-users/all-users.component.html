@@ -1,3 +1,7 @@
-<main>
-    <app-user *ngFor="let user of users"></app-user>
-</main>
+<section>
+    <app-header></app-header>
+    <button class="btn add mx-4">Add User</button>
+    <main class="row gy-2 ">
+        <app-user *ngFor="let u of users" [user]="u"></app-user>
+    </main>
+</section>

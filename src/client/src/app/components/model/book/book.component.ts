@@ -9,14 +9,14 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./book.component.sass']
 })
 export class BookComponent implements OnInit {
-  userId:number=4;
+  userId:number=2;
   id:string="";
   isBooked=false;
 
   @Input() book:Book={
     id:0,
-    bookName:"",
-    createdAt:""
+    book_name:"",
+    created_at:""
   }
   constructor(private bookService:BookService,private userService:UserService) { }
 
@@ -29,6 +29,8 @@ export class BookComponent implements OnInit {
       })  
     
      });
+
+     
   }
 
 }

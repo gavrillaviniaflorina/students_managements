@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { UserCoursesComponent } from './components/forUser/user-courses/user-courses.component';
 import { AllBooksComponent } from './components/all/all-books/all-books.component';
+import { NewBookComponent } from './components/add/new-book/new-book.component';
 
 
 
@@ -40,13 +42,16 @@ import { AllBooksComponent } from './components/all/all-books/all-books.componen
     NewCourseComponent,
     UserCoursesComponent,
     AllBooksComponent,
+    NewBookComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -29,4 +29,8 @@ export class CourseService {
     return this.http.get<Course>(this.api+`/findCourseById/${id}`);
    }
 
+   addCourse(course:Course):Observable<Course>{
+    this.coursesChanged.next([...this.coursesChanged.value,course]);
+    return this.http.post<Course>(this.api+"/addCourse",course);
+   }
 }
