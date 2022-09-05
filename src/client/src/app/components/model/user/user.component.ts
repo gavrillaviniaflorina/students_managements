@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -8,7 +9,7 @@ import { User } from 'src/app/models/user';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService:UserService) { }
 //@ts-ignore
 @Input() user:User={
   id:0,
@@ -18,6 +19,10 @@ export class UserComponent implements OnInit {
 }
 
   ngOnInit(): void {
+
+    this.userService.getUsers().subscribe(response=>{
+      
+    });
   }
 
 }

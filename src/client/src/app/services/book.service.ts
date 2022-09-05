@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap} from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Book } from '../models/book';
 
@@ -13,7 +13,7 @@ export class BookService {
 
   constructor(private http:HttpClient) { 
     this.getBooks().subscribe((response)=>{
-
+      this.booksChanged.next(response);
     })
   }
 
@@ -22,17 +22,43 @@ export class BookService {
       tap((response:Book[])=>{
         this.booksChanged.next(response)
       })
-    )
+    ).pipe(tap(console.log),catchError(this.handleError));
    }
 
    findBookById(id:number):Observable<Book>{
-    return this.http.get<Book>(this.api+`/findBookById/${id}`);
+    return this.http.get<Book>(this.api+`/findBookById/${id}`).pipe(tap(console.log),catchError(this.handleError));
    }
 
    addBook(book:Book):Observable<Book>{
     this.booksChanged.next([...this.booksChanged.value,book]);
-    return this.http.post<Book>(this.api+"/addBook",book);
+    return this.http.post<Book>(this.api+"/addBook",book).pipe(tap(console.log),catchError(this.handleError));
    }
+
+   updateBook(book:Book, id:number):Observable<Book>{
+
+    this.booksChanged.next([...this.booksChanged.value.filter(e=>e.id!=id), book]);
+
+    return this.http.put<Book>(this.api+`/updateBook`, book).pipe(tap(console.log),catchError(this.handleError));
+   }
+
+   private handleError(error:HttpErrorResponse):Observable<never>{
+    let errorMessage:string;
+  
+    if(error.error instanceof ErrorEvent){
+      errorMessage=`A client error ocurred -${error.error.message}`;
+    }else{
+  
+      if(error.error.reason){
+        errorMessage=`${error.error.reason} - Error code ${error.status}`;
+      }else{
+        errorMessage=error.error.message;
+      }
+    }
+  
+    return throwError(errorMessage);
+  
+  }
+
 
 
 }

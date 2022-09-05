@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +24,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { UserCoursesComponent } from './components/forUser/user-courses/user-courses.component';
 import { AllBooksComponent } from './components/all/all-books/all-books.component';
 import { NewBookComponent } from './components/add/new-book/new-book.component';
+import { EditCourseComponent } from './components/edit/edit-course/edit-course.component';
+import { UserBooksComponent } from './components/forUser/user-books/user-books.component';
+import { EditBookComponent } from './components/edit/edit-book/edit-book.component';
 
 
 
@@ -43,6 +48,9 @@ import { NewBookComponent } from './components/add/new-book/new-book.component';
     UserCoursesComponent,
     AllBooksComponent,
     NewBookComponent,
+    EditCourseComponent,
+    UserBooksComponent,
+    EditBookComponent,
   ],
   imports: [
     BrowserModule,

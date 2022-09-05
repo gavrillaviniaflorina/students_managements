@@ -4,7 +4,7 @@
       </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <div class="dropdown-item">User Profile</div>
-        <div class="dropdown-item">My Books</div>
-        <div class="dropdown-item" [routerLink]="'my-courses/'+[userId]">My Courses</div>
+        <div class="dropdown-item" (click)="myBooks($event)">My Books</div>
+        <div class="dropdown-item" (click)="myCourses($event)">My Courses</div>
     </div>
 </div>

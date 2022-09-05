@@ -2,6 +2,7 @@
 <div class="d-flex flex-row justify-content-start ml-5">
     <button *ngIf="!isBooked" type="button" class="btn btn-primary" (click)="takeBook()">Take it</button>
     <button *ngIf="isBooked" type="button" class="btn btn-danger" (click)="returnBook()">Return it</button>
+    <button type="button" class="btn btn-light" (click)="editBook($event)">Edit</button>
 </div>
 
 <main class="m-5">

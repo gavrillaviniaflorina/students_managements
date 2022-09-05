@@ -1,4 +1,4 @@
-<div class="book card col-11  m-5 d-flex align-items-center" style="width: 18rem; height: 10rem;" [routerLink]="'book-details/'+[book.id]+'/'+[isBooked]">
+<div class="book card col-11  m-5 d-flex align-items-center" (click)="onClick($event)" style="width: 18rem; height: 10rem;">
 
     <div class="card-header" style="width: 112%">
         Book

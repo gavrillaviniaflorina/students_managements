@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-dropdown',
@@ -8,10 +9,20 @@ import { Component, OnInit } from '@angular/core';
 export class UserDropdownComponent implements OnInit {
 
   userId:number=4;
-  constructor() { }
+  constructor( private router:Router) { }
 
   ngOnInit(): void {
     
+  }
+
+  public myCourses(event:Event){
+
+    this.router.navigate([`my-courses/${this.userId}`]);
+  }
+
+  public myBooks(event:Event){
+
+    this.router.navigate([`my-books/${this.userId}`]);
   }
 
 }

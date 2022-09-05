@@ -1,17 +1,18 @@
 <app-header></app-header>
+
 <main class="d-flex flex-column align-self-center">
 
     <form [formGroup]="bookForm" class="d-flex flex-column m-auto" style="width: 50%;">
-        <h1 class="my-5">New Book </h1>
+        <h1 class="my-5">Edit Book </h1>
 
         <label for="name">Name</label>
         <input class="name" formControlName="name">
 
         <label for="created">Created at</label>
-        <input type="datetime-local" class="created" formControlName="created">
+        <input type="date-local" class="created" formControlName="created">
 
         <div class="d-flex flex-row mt-3 justify-content-end">
-            <button (click)="onClick($event) " class="btn btn-primary mr-3">Create</button>
+            <button (click)="onEdit($event) " class="btn btn-primary mr-3">Create</button>
             <button (click)="OnCancel($event) " class="btn btn-secondary">Cancel</button>
         </div>
 
