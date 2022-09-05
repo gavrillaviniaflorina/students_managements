@@ -93,7 +93,7 @@ public class UserController {
     }
 
     @GetMapping("getBooksOfUser/{id}")
-    public ResponseEntity<List<Book>> ebookedBooksForUser(@PathVariable Long id){
+    public ResponseEntity<List<Book>> bookedBooksForUser(@PathVariable Long id){
         log.info("Rest request for enrolled course");
         User user=this.userService.getUserById(id);
         return new ResponseEntity<>(user.getBooks(), HttpStatus.OK);

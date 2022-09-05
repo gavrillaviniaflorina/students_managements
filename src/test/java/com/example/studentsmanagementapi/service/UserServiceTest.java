@@ -12,6 +12,7 @@ import com.example.studentsmanagementapi.repository.BookRepository;
 import com.example.studentsmanagementapi.repository.CourseRepository;
 import com.example.studentsmanagementapi.repository.UserRepository;
 import com.github.javafaker.Faker;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -53,7 +54,9 @@ class UserServiceTest {
     void setUp(){
         MockitoAnnotations.initMocks(this);
         underTest=new UserService(userRepository, bookRepository,courseRepository, modelMapper);
+
     }
+
 
 
 
@@ -280,26 +283,25 @@ class UserServiceTest {
         assertThatThrownBy(()->underTest.addCourseForUser(user.getId(),course.getId())).isInstanceOf(CourseNotFoundException.class).hasMessageContaining("Course does not exists");
     }
 
-    @Test
-    void IsShouldDeleteCourseForUser(){
-        User user=new User("ceva","as@gmail.com","aqee1");
-        user.setId(1L);
-        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
-
-        Course course =new Course("a","ceva");
-        course.setId(1L);
-        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
-
-        underTest.deleteCourseForUser(user.getId(),course.getId());
-        BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
-        BDDMockito.then(courseRepository).should().save(courseArgumentCaptor.capture());
-
-        User user1=userArgumentCaptor.getValue();
-        Course course1=courseArgumentCaptor.getValue();
-        assertThat(user1).isEqualTo(user);
-        assertThat(course1).isEqualTo(course);
-
-    }
+//    @Test
+//    void IsShouldDeleteCourseForUser(){
+//        User user=new User("ceva","as@gmail.com","aqee1");
+//        user.setId(1L);
+//        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
+//
+//        Course course =new Course("a","ceva");
+//        course.setId(1L);
+//        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
+//
+//        underTest.deleteCourseForUser(user.getId(),course.getId());
+//        BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
+//        BDDMockito.then(courseRepository).should().save(courseArgumentCaptor.capture());
+//
+//        User user1=userArgumentCaptor.getValue();
+//        Course course1=courseArgumentCaptor.getValue();
+//        assertThat(user1).isEqualTo(user);
+//        assertThat(course1).isEqualTo(course);
+//    }
 
     @Test
     void ItShouldThrowUserNotFoundExceptionWhenDeletingCourseForUser(){

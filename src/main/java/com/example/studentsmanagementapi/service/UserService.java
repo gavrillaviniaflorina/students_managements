@@ -126,6 +126,7 @@ public class UserService {
 
         User actualUser=this.userRepository.findById(userId).get();
         Course actualCourse=this.courseRepository.findById(courseId).get();
+
         if(!actualUser.getEnrolledCourses().contains(actualCourse)){
             throw new CourseNotFoundException("You are not enrolled to this course");
         }
@@ -154,6 +155,11 @@ public class UserService {
 
         User actualUser=this.userRepository.findById(userId).get();
         Book actualBook=this.bookRepository.findById(bookId).get();
+
+        if(actualUser.getBooks().contains(actualBook)){
+            throw new BookExistsException("You already have this book");
+        }
+
         actualUser.addBook(actualBook);
 
         userRepository.save(actualUser);
@@ -178,6 +184,9 @@ public class UserService {
 
         User actualUser=this.userRepository.findById(userId).get();
         Book actualBook=this.bookRepository.findById(bookId).get();
+        if(!actualUser.getBooks().contains(actualBook)){
+            throw new BookNotFoundException("You don't have this book");
+        }
         actualUser.removeBook(actualBook);
 
         actualBook.setUser(null);
