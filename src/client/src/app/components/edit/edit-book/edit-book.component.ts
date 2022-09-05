@@ -17,15 +17,7 @@ export let browserRefresh=false;
 export class EditBookComponent implements OnInit, OnDestroy {
 
   constructor(private route:ActivatedRoute,private bookService:BookService, private router:Router, private notificationService:NotificationService) { 
-    this.subscriptionForRouter=router.events.subscribe((event)=>{
-      if(event instanceof NavigationStart){
-        browserRefresh=!router.navigate;
-      }
-      console.log(browserRefresh);
-      if(browserRefresh==true){
-        this.router.navigate(['/books']);
-      }
-    })
+   
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -36,7 +28,8 @@ export class EditBookComponent implements OnInit, OnDestroy {
   book:Book={
     id:0,
     book_name:"",
-    created_at:""
+    created_at:"",
+    description:""
   };
 
   private subscription!:Subscription;
@@ -62,14 +55,14 @@ export class EditBookComponent implements OnInit, OnDestroy {
     this.redirect();
     this.bookForm=new FormGroup({
 
-      'name':new FormControl(book.book_name,Validators.required),
-      'created':new FormControl(book.created_at,Validators.required)
+      'book_name':new FormControl(book.book_name,Validators.required),
+      'created_at':new FormControl(book.created_at,Validators.required),
+      'description':new FormControl(book.description, Validators.required)
     })
   }
 
   public onEdit(event:Event){
   
-    
     if(this.bookForm.valid==true){
 
       this.bookService.updateBook(this.bookForm.value, +this.id).subscribe(response=>{       
@@ -100,7 +93,6 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   private redirect(){
-    console.log("aici");
   window.addEventListener("beforeunload", ()=>{
     this.router.navigate(['/books']);
   })

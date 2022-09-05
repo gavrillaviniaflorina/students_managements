@@ -17,7 +17,8 @@ export class CourseComponent implements OnInit, OnDestroy {
   @Input()course:Course={
     id:Math.round( Math.random()*1000),
     name:"",
-    departament:""
+    departament:"",
+    description:""
   }
 
   private subscription!: Subscription;

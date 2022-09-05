@@ -18,7 +18,8 @@ export class BookComponent implements OnInit,OnDestroy {
   @Input() book:Book={
     id:Math.round( Math.random()*1000),
     book_name:"",
-    created_at:""
+    created_at:"",
+    description:""
   }
 
   private subscription!: Subscription;
@@ -42,7 +43,6 @@ export class BookComponent implements OnInit,OnDestroy {
   }
 
   public onClick(event:Event){
-
     this.router.navigate(['books/book-details/'+this.book.id+'/'+this.isBooked]);
   }
 

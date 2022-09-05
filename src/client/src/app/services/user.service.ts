@@ -42,7 +42,7 @@ public bookedBooks= new BehaviorSubject<Book[]>([]);
   getUsers():Observable<User[]>{
     return this.http.get<User[]>(this.api).pipe(
       tap((response:User[])=>{
-        this.usersChanged.next(response)
+        this.usersChanged.next(response);
       })
     )
   }

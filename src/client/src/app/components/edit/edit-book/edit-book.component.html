@@ -6,10 +6,13 @@
         <h1 class="my-5">Edit Book </h1>
 
         <label for="name">Name</label>
-        <input class="name" formControlName="name">
+        <input class="name" formControlName="book_name">
 
         <label for="created">Created at</label>
-        <input type="date-local" class="created" formControlName="created">
+        <input type="date-local" class="created" formControlName="created_at">
+
+        <label for="desctiption">Description</label>
+        <input type="desctiption" class="created" formControlName="description">
 
         <div class="d-flex flex-row mt-3 justify-content-end">
             <button (click)="onEdit($event) " class="btn btn-primary mr-3">Create</button>

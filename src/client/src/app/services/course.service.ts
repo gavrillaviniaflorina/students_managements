@@ -22,11 +22,7 @@ export class CourseService {
       tap((response:Course[])=>{
         this.coursesChanged.next(response);
       })
-    ).pipe(tap(console.log),catchError(this.handleError));
-   }
-
-   findCourseById(id:number):Observable<Course>{
-    return this.http.get<Course>(this.api+`/findCourseById/${id}`).pipe(tap(console.log),catchError(this.handleError));
+    ).pipe(catchError(this.handleError));
    }
 
    addCourse(course:Course):Observable<Course>{
@@ -39,6 +35,13 @@ export class CourseService {
     this.coursesChanged.next([...this.coursesChanged.value.filter(e=>e.id!=id), course]);
 
     return this.http.put<Course>(this.api+`/updateCourse`, course).pipe(tap(console.log),catchError(this.handleError));
+   }
+
+   deleteCourse( id:number):Observable<Course>{
+
+    this.coursesChanged.next([...this.coursesChanged.value.filter(e=>e.id!=id)]);
+
+    return this.http.delete<Course>(this.api+`/deleteCourse/${id}`).pipe(tap(console.log),catchError(this.handleError));
    }
 
    private handleError(error:HttpErrorResponse):Observable<never>{

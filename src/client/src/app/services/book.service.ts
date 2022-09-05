@@ -20,13 +20,9 @@ export class BookService {
   getBooks():Observable<Book[]>{
     return this.http.get<Book[]>(this.api).pipe(
       tap((response:Book[])=>{
-        this.booksChanged.next(response)
+        this.booksChanged.next(response);
       })
-    ).pipe(tap(console.log),catchError(this.handleError));
-   }
-
-   findBookById(id:number):Observable<Book>{
-    return this.http.get<Book>(this.api+`/findBookById/${id}`).pipe(tap(console.log),catchError(this.handleError));
+    ).pipe(catchError(this.handleError));
    }
 
    addBook(book:Book):Observable<Book>{
@@ -39,6 +35,13 @@ export class BookService {
     this.booksChanged.next([...this.booksChanged.value.filter(e=>e.id!=id), book]);
 
     return this.http.put<Book>(this.api+`/updateBook`, book).pipe(tap(console.log),catchError(this.handleError));
+   }
+
+   deleteBook(id:number):Observable<Book>{
+
+    this.booksChanged.next([...this.booksChanged.value.filter(e=>e.id!=id)]);
+
+    return this.http.delete<Book>(this.api+`/deleteBook/${id}`).pipe(tap(console.log),catchError(this.handleError));
    }
 
    private handleError(error:HttpErrorResponse):Observable<never>{

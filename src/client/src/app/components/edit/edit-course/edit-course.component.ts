@@ -25,7 +25,8 @@ export class EditCourseComponent implements OnInit, OnDestroy {
   course:Course={
     id:0,
     name:"",
-    departament:""
+    departament:"",
+    description:""
   };
 
   ngOnInit(): void {
@@ -50,7 +51,8 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     this.courseForm=new FormGroup({
 
       'name':new FormControl(course.name,Validators.required),
-      'departament':new FormControl(course.departament,Validators.required)
+      'departament':new FormControl(course.departament,Validators.required),
+      'description': new FormControl(course.description,Validators.required)
     })
   }
 

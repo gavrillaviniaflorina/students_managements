@@ -18,9 +18,10 @@ export class NewBookComponent implements OnInit {
   bookForm:FormGroup;
   private subscription!:Subscription;
   book:Book={
-    id:0,
+    id:Math.round( Math.random()*1000),
     book_name:"",
-    created_at:""
+    created_at:"",
+    description:""
   };
 
   ngOnInit(): void {
@@ -32,19 +33,21 @@ export class NewBookComponent implements OnInit {
     this.bookForm=new FormGroup({
 
       'name':new FormControl("",Validators.required),
-      'created':new FormControl("",Validators.required)
+      'created':new FormControl("",Validators.required),
+      'desctiption':new FormControl("",Validators.required)
     })
   }
 
   public onClick(event:Event){
     
+   
     if(this.bookForm.valid==true){
 
       this.book.book_name=this.bookForm.value['name'];
       this.book.created_at=this.bookForm.value['created'];
+      this.book.description=this.bookForm.value['desctiption'];
 
-      this.subscription=this.bookService.addBook(this.book).subscribe(response=>{  
-         
+      this.subscription=this.bookService.addBook(this.book).subscribe(response=>{         
         this.notificationService.onSuccess("The book was created");
         this.router.navigate(['/books']);
       },

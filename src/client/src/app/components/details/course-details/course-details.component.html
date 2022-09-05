@@ -1,8 +1,11 @@
 <app-header></app-header>
-<div class="d-flex flex-row justify-content-start ml-5">
-    <button *ngIf="!isEnrolled" type="button" class="btn btn-primary mr-2" (click)="joinCourse()">Join</button>
-    <button *ngIf="isEnrolled" type="button" class="btn btn-danger mr-2" (click)="leaveCourse()">Leave course</button>
-    <button type="button" class="btn btn-light" (click)="editCourse($event)">Edit</button>
+<div class="d-flex flex-row justify-content-between ml-5">
+    <div class="d-flex flex-row justify-content-start ">
+        <button *ngIf="!isEnrolled" type="button" class="btn btn-primary mr-2" (click)="joinCourse()">Join</button>
+        <button *ngIf="isEnrolled" type="button" class="btn btn-danger mr-2" (click)="leaveCourse()">Leave course</button>
+        <button type="button" class="btn btn-light" (click)="editCourse($event)">Edit</button>
+    </div>
+    <button class="bi bi-trash-fill mr-5" style="border: none; background-color:transparent; color:red" (click)="deleteCourse($event)"></button>
 </div>
 
 <main class="m-5">
@@ -12,9 +15,6 @@
 
     <p>Course departament : {{course.departament}}</p>
 
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nulla quaerat natus tempore corrupti totam non quas perspiciatis repellat corporis neque hic ab animi harum, quo nisi? Nihil tenetur dolores laboriosam laborum minima autem eius, molestias
-        enim ratione omnis ullam, fuga cumque architecto hic, ut amet. Tempore nisi saepe tenetur laborum, voluptatibus perspiciatis officia quas. Numquam fuga quae reprehenderit commodi nisi fugiat, mollitia magnam ad animi ab assumenda maiores accusantium
-        laboriosam? Nam natus, nemo, a voluptas eaque veritatis ipsam ipsum, suscipit non laboriosam voluptates dolorum expedita obcaecati. Ea deleniti illum aliquam dicta similique recusandae consequuntur sed beatae, sapiente nihil cumque quaerat?</p>
-
+    <p>{{course.description}}</p>
 
 </main>

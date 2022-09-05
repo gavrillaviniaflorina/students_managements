@@ -21,7 +21,8 @@ export class CourseDetailsComponent implements OnInit, OnDestroy {
   @Input() course:Course={
     id:0,
     name:"",
-    departament: ""
+    departament: "",
+    description:""
   }
 
   
@@ -65,5 +66,12 @@ export class CourseDetailsComponent implements OnInit, OnDestroy {
 
   public editCourse(event:Event){
     this.router.navigate([`courses/edit-course/${this.course.id}`]);
+  }
+
+  public deleteCourse(event:Event){
+    this.courseService.deleteCourse(+this.id).subscribe(response=>{       
+      this.notificationService.onSuccess("The course was deleted");
+      this.router.navigate(['/courses']);
+    });
   }
 }

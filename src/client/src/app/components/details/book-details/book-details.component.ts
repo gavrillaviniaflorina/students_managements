@@ -20,7 +20,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy{
   @Input() book:Book={
     id:0,
     book_name:"",
-    created_at: ""
+    created_at: "",
+    description:""
   }
   
   private subscription!: Subscription;
@@ -36,8 +37,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy{
     this.subscription=this.route.params.subscribe(params=>{
       this.id=params['id'];
       this.isBooked= params['isBooked']=="true";
-      this.subscriptionOnBooksChanged=this.bookService.findBookById(+this.id).subscribe(response=>{
-        this.book=response;
+      this.subscriptionOnBooksChanged=this.bookService.booksChanged.subscribe(response=>{
+        for(let i=0;i<response.length;i++){
+          if(response[i].id===+this.id){
+            this.book=response[i];
+          }
+        }
       })
     })
   }
@@ -59,6 +64,13 @@ public returnBook(){
 
 public editBook(event:Event){
   this.router.navigate([`books/edit-book/${this.book.id}`]);
+}
+
+public deleteBook(event:Event){
+  this.bookService.deleteBook(+this.id).subscribe(response=>{       
+    this.notificationService.onSuccess("The book was deleted");
+    this.router.navigate(['/books']);
+  });
 }
 
 }

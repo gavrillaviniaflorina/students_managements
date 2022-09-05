@@ -20,7 +20,8 @@ export class NewCourseComponent implements OnInit {
   course:Course={
     id:Math.round( Math.random()*1000),
     name:"",
-    departament:""
+    departament:"",
+    description:""
   };
 
   ngOnInit(): void {
@@ -32,7 +33,8 @@ export class NewCourseComponent implements OnInit {
     this.courseForm=new FormGroup({
 
       'name':new FormControl("",Validators.required),
-      'departament':new FormControl("",Validators.required)
+      'departament':new FormControl("",Validators.required),
+      'description': new FormControl("", Validators.required)
     })
   }
 
@@ -42,6 +44,7 @@ export class NewCourseComponent implements OnInit {
 
       this.course.name=this.courseForm.value['name'];
       this.course.departament=this.courseForm.value['departament'];
+      this.course.description=this.courseForm.value['description'];
 
       this.subscription=this.courseService.addCourse(this.course).subscribe(response=>{       
         this.notificationService.onSuccess("The course was created");

@@ -1,5 +1,6 @@
 export interface Course{
     id:number,
     name:string,
-    departament:string
+    departament:string,
+    description:string
 }
