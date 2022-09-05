@@ -32,7 +32,7 @@ class CourseRepositoryTest {
     @Test
     void itShouldCheckIfTheNameExists(){
         Faker faker=new Faker();
-        Course course=new Course("Lavinia Gavril", "mate");
+        Course course=new Course("Lavinia Gavril", "mate","");
         underTest.save(course);
         Optional<Course> expect=underTest.selectedNameExists(course.getName());
 

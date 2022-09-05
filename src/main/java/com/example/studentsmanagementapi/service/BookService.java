@@ -31,7 +31,7 @@ public class BookService {
                     "The book already exists"
             );
         }
-        this.bookRepository.save(new Book(book.getBook_name(),book.getCreated_at()));
+        this.bookRepository.save(new Book(book.getBook_name(),book.getCreated_at(), book.getDescription()));
     }
 
     public void deleteBook(Long id){
@@ -47,11 +47,11 @@ public class BookService {
 
     public void updateBook(BookDto updateBook){
 
-        Boolean updatedId=this.bookRepository.selectedNameExists(updateBook.getBook_name()).isPresent();
+        Boolean updated=this.bookRepository.selectedNameExists(updateBook.getBook_name()).isPresent();
 
-        if(!updatedId){
+        if(!updated){
             throw new BookNotFoundException(
-                    "Book not found"
+                    "Book" +updateBook.getBook_name()+" not found"
             );
         }
         Book bookFound=this.bookRepository.selectedNameExists(updateBook.getBook_name()).get();
@@ -59,6 +59,7 @@ public class BookService {
 
             book.setBook_name(updateBook.getBook_name());
             book.setCreated_at(updateBook.getCreated_at());
+            book.setDescription(updateBook.getDescription());
 
             return bookRepository.save(book);
         });

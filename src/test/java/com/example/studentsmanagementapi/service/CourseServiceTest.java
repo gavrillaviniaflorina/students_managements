@@ -64,20 +64,20 @@ class CourseServiceTest {
     @Test
     void isShouldAddCourse() {
         Faker faker = new Faker();
-        CourseDto courseDto = new CourseDto("carte", "mate");
+        CourseDto courseDto = new CourseDto("carte", "mate","");
         doReturn(Optional.empty()).when(courseRepository).selectedNameExists(courseDto.getName());
         underTest.addCourse(courseDto);
 
         BDDMockito.then(courseRepository).should().save(courseArgumentCaptor.capture());
         Course course = courseArgumentCaptor.getValue();
-        CourseDto courseDto1 = new CourseDto(course.getName(), course.getDepartament());
+        CourseDto courseDto1 = new CourseDto(course.getName(), course.getDepartament(), "");
         assertThat(courseDto1).isEqualTo(courseDto);
     }
 
     @Test
     void ItShouldThrowAnExceptonWhenAddingACourse() {
         Faker faker = new Faker();
-        CourseDto courseDto = new CourseDto("carte", "mate");
+        CourseDto courseDto = new CourseDto("carte", "mate","");
         doReturn(Optional.of(courseDto)).when(courseRepository).selectedNameExists(courseDto.getName());
         assertThatThrownBy(() -> underTest.addCourse(courseDto)).isInstanceOf(CourseExistsException.class).hasMessageContaining("The course already exists");
     }
@@ -85,7 +85,7 @@ class CourseServiceTest {
     @Test
     void ItShouldDeleteBook() {
 
-        Course course = new Course("carte", "mate");
+        Course course = new Course("carte", "mate","");
         doReturn(Optional.of(course)).when(courseRepository).selectedNameExists(course.getName());
         course.setId(1L);
 
@@ -97,7 +97,7 @@ class CourseServiceTest {
     @Test
     void ItShouldThrowAnExceptonWhenDeletingBook() {
 
-        Course course = new Course("carte", "mate");
+        Course course = new Course("carte", "mate" ,"");
         doReturn(Optional.of(course)).when(courseRepository).selectedNameExists(course.getName());
         course.setId(1L);
 
@@ -107,10 +107,10 @@ class CourseServiceTest {
 
     @Test
     void ItShouldUpdateBook() {
-        CourseDto course = new CourseDto("carte", "mate");
+        CourseDto course = new CourseDto("carte", "mate","");
         doReturn(Optional.of(course)).when(courseRepository).selectedNameExists(course.getName());
 
-        Course courseHelper = new Course(course.getName(), course.getDepartament());
+        Course courseHelper = new Course(course.getName(), course.getDepartament(), course.getDescription());
         courseHelper.setId(1L);
         doReturn(Optional.of(courseHelper)).when(courseRepository).selectedNameExists(course.getName());
         doReturn(Optional.of(courseHelper)).when(courseRepository).findById(1L);
@@ -126,10 +126,10 @@ class CourseServiceTest {
     @Test
     void ItShouldThrowAnExceptionWhenUpdatingABook() {
 
-        CourseDto course = new CourseDto("carte", "mate");
+        CourseDto course = new CourseDto("carte", "mate","");
         doReturn(Optional.of(course)).when(courseRepository).selectedNameExists(course.getName());
 
-        Course courseHelper = new Course(course.getName(), course.getDepartament());
+        Course courseHelper = new Course(course.getName(), course.getDepartament(),course.getDescription());
         courseHelper.setId(1L);
         doReturn(Optional.empty()).when(courseRepository).selectedNameExists(course.getName());
         doReturn(Optional.empty()).when(courseRepository).findById(1L);

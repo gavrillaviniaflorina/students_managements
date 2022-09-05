@@ -62,13 +62,13 @@ class BookServiceTest {
         void isShouldAddBook(){
                 Faker faker=new Faker();
                 LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-                BookDto bookDto=new BookDto("carte", date,null);
+                BookDto bookDto=new BookDto("carte", date,null,"");
                 doReturn(Optional.empty()).when(bookRepository).selectedNameExists(bookDto.getBook_name());
                 underTest.addBook(bookDto);
 
                 BDDMockito.then(bookRepository).should().save(bookArgumentCaptor.capture());
                 Book bookSaved=bookArgumentCaptor.getValue();
-                BookDto bookDto1=new BookDto(bookSaved.getBook_name(), bookSaved.getCreated_at(), null);
+                BookDto bookDto1=new BookDto(bookSaved.getBook_name(), bookSaved.getCreated_at(), null,"");
                 assertThat(bookDto1).isEqualTo(bookDto);
                 }
 
@@ -76,7 +76,7 @@ class BookServiceTest {
         void ItShouldThrowAnExceptonWhenAddingABook(){
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        BookDto bookDto=new BookDto("carte", date,null);
+        BookDto bookDto=new BookDto("carte", date,null, "");
         doReturn(Optional.of(bookDto)).when(bookRepository).selectedNameExists(bookDto.getBook_name());
         assertThatThrownBy(()->underTest.addBook(bookDto)).isInstanceOf(BookExistsException.class).hasMessageContaining("The book already exists");
             }
@@ -86,7 +86,7 @@ class BookServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-               Book book=new Book("lavinia", date);
+               Book book=new Book("lavinia", date,"");
                 book.setId(1L);
 
                 doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
@@ -99,7 +99,7 @@ class BookServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book=new Book("lavinia", date);
+        Book book=new Book("lavinia", date,"");
         book.setId(1L);
 
         doReturn(Optional.empty()).when(bookRepository).findById(book.getId());
@@ -112,9 +112,9 @@ class BookServiceTest {
                 Faker faker=new Faker();
 
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        BookDto book=new BookDto("lavinia", date, null);
+        BookDto book=new BookDto("lavinia", date, null,"");
 
-        Book bookHelper=new Book(book.getBook_name(), book.getCreated_at());
+        Book bookHelper=new Book(book.getBook_name(), book.getCreated_at(),"");
                 bookHelper.setId(1L);
                 doReturn(Optional.of(bookHelper)).when(bookRepository).selectedNameExists(book.getBook_name());
                 doReturn(Optional.of(bookHelper)).when(bookRepository).findById(1L);
@@ -133,9 +133,9 @@ class BookServiceTest {
         Faker faker=new Faker();
 
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        BookDto book=new BookDto("lavinia", date, null);
+        BookDto book=new BookDto("lavinia", date, null,"");
 
-        Book bookHelper=new Book(book.getBook_name(), book.getCreated_at());
+        Book bookHelper=new Book(book.getBook_name(), book.getCreated_at(),"");
         bookHelper.setId(1L);
         doReturn(Optional.empty()).when(bookRepository).selectedNameExists(book.getBook_name());
         doReturn(Optional.empty()).when(bookRepository).findById(1L);
@@ -146,7 +146,7 @@ class BookServiceTest {
         void ItShouldGetBookById(){
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book=new Book("lavinia", date);
+        Book book=new Book("lavinia", date, "");
         book.setId(1L);
 
         doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());

@@ -51,15 +51,25 @@ public class Course {
     @NotEmpty
     private String departament;
 
-    public Course(String name, String departament) {
+    @Column(
+            name="description",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    @NotEmpty
+    private String description;
+
+    public Course(String name, String departament, String description) {
         this.name = name;
         this.departament = departament;
+        this.description= description;
     }
 
-    public Course(Long id, String name, String departament) {
+    public Course(Long id, String name, String departament, String description) {
         this.id = id;
         this.name = name;
         this.departament = departament;
+        this.description =description;
     }
 
     @ManyToMany(mappedBy = "enrolledCourses",

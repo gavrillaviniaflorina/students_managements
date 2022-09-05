@@ -150,7 +150,7 @@ class UserServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book =new Book("a",date);
+        Book book =new Book("a",date,"");
         book.setId(1L);
         doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
 
@@ -172,7 +172,7 @@ class UserServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book =new Book("a",date);
+        Book book =new Book("a",date,"");
         book.setId(1L);
         doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
 
@@ -187,7 +187,7 @@ class UserServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book =new Book("a",date);
+        Book book =new Book("a",date,"");
         book.setId(1L);
         doReturn(Optional.empty()).when(bookRepository).findById(book.getId());
 
@@ -202,7 +202,7 @@ class UserServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book =new Book("a",date);
+        Book book =new Book("a",date,"");
         book.setId(1L);
         doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
         underTest.deleteBookForUser(user.getId(),book.getId());
@@ -217,7 +217,7 @@ class UserServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book =new Book("a",date);
+        Book book =new Book("a",date,"");
         book.setId(1L);
         doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
 
@@ -232,7 +232,7 @@ class UserServiceTest {
 
         Faker faker=new Faker();
         LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book =new Book("a",date);
+        Book book =new Book("a",date,"");
         book.setId(1L);
         doReturn(Optional.empty()).when(bookRepository).findById(book.getId());
 
@@ -245,7 +245,7 @@ class UserServiceTest {
         user.setId(1L);
         doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
 
-        Course course =new Course("a","ceva");
+        Course course =new Course("a","ceva","");
         course.setId(1L);
         doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
 
@@ -263,7 +263,7 @@ class UserServiceTest {
         user.setId(1L);
         doReturn(Optional.empty()).when(userRepository).findById(user.getId());
 
-        Course course =new Course("a","ceva");
+        Course course =new Course("a","ceva","");
         course.setId(1L);
         doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
 
@@ -276,7 +276,7 @@ class UserServiceTest {
         user.setId(1L);
         doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
 
-        Course course =new Course("a","ceva");
+        Course course =new Course("a","ceva","");
         course.setId(1L);
         doReturn(Optional.empty()).when(courseRepository).findById(course.getId());
 
@@ -309,7 +309,7 @@ class UserServiceTest {
         user.setId(1L);
         doReturn(Optional.empty()).when(userRepository).findById(user.getId());
 
-        Course course =new Course("a","ceva");
+        Course course =new Course("a","ceva","");
         course.setId(1L);
         doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
 
@@ -323,7 +323,7 @@ class UserServiceTest {
         user.setId(1L);
         doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
 
-        Course course =new Course("a","ceva");
+        Course course =new Course("a","ceva","");
         course.setId(1L);
         doReturn(Optional.empty()).when(courseRepository).findById(course.getId());
 

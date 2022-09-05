@@ -51,6 +51,14 @@ public class Book {
 
     private LocalDate created_at;
 
+    @Column(
+            name="description",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    @NotEmpty
+    private String description;
+
     @ManyToOne(
             fetch = FetchType.LAZY
     )
@@ -63,9 +71,10 @@ public class Book {
     @JsonBackReference
     private User user;
 
-    public Book(String title, LocalDate date) {
+    public Book(String title, LocalDate date, String description) {
         this.book_name=title;
         this.created_at=date;
+        this.description=description;
     }
 
 

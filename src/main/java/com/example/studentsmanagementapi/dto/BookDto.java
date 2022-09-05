@@ -12,6 +12,15 @@ public class BookDto {
     private String book_name;
     private LocalDate created_at;
     private Long user_id;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Long getUser_id() {
         return user_id;

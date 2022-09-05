@@ -33,7 +33,7 @@ public class CourseService {
                     "The course already exists"
             );
         }
-        courseRepository.save(new Course(course.getName(),course.getDepartament()));
+        courseRepository.save(new Course(course.getName(),course.getDepartament(), course.getDescription()));
     }
 
     public void deleteCourse(Long id){
@@ -61,6 +61,7 @@ public class CourseService {
         Course courseFound=this.courseRepository.selectedNameExists(updateCourse.getName()).get();
         this.courseRepository.findById(courseFound.getId()).map(course->{
             course.setDepartament(updateCourse.getDepartament());
+            course.setDescription(updateCourse.getDescription());
 
             return courseRepository.save(course);
         });
