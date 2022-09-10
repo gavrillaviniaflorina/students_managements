@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 import { User } from '../../../models/user';
-import { UserServiceService } from '../../../services/user-service.service';
+
 
 @Component({
   selector: 'app-all-users',
@@ -12,7 +14,7 @@ export class AllUsersComponent implements OnInit, OnDestroy {
   public users:User[]=[];
   private subscription!: Subscription;
   
-  constructor(private userService:UserServiceService) { }
+  constructor(private userService:UserService, private router:Router) { }
   
   ngOnDestroy(): void {
    this.subscription.unsubscribe();

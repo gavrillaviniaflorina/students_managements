@@ -23,7 +23,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
   courseForm:FormGroup;
   id:string='ceva'; 
   course:Course={
-    id:0,
+    id:Math.round( Math.random()*1000),
     name:"",
     departament:"",
     description:""

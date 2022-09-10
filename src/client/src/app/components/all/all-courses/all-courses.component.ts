@@ -27,4 +27,5 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
     })
   }
 
+
 }

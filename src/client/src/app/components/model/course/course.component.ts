@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/models/course';
 import { CourseService } from 'src/app/services/course.service';
@@ -15,7 +16,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   isEnrolled=false;
 
   @Input()course:Course={
-    id:Math.round( Math.random()*1000),
+    id:0,
     name:"",
     departament:"",
     description:""
@@ -23,7 +24,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   private subscription!: Subscription;
 
-  constructor(private courseService:CourseService, private userService:UserService) { }
+  constructor(private courseService:CourseService, private userService:UserService, private router:Router) { }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -36,6 +37,11 @@ export class CourseComponent implements OnInit, OnDestroy {
            }        
       })     
      });
+  }
+
+  public onClick(event:Event){
+
+    this.router.navigate([`/courses/course-details/${this.course.id}/${this.isEnrolled}`]);
   }
 
 }

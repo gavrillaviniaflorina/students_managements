@@ -7,6 +7,7 @@ import { AllCoursesComponent } from './components/all/all-courses/all-courses.co
 import { AllUsersComponent } from './components/all/all-users/all-users.component';
 import { BookDetailsComponent } from './components/details/book-details/book-details.component';
 import { CourseDetailsComponent } from './components/details/course-details/course-details.component';
+import { UserDetailsComponent } from './components/details/user-details/user-details.component';
 import { EditBookComponent } from './components/edit/edit-book/edit-book.component';
 import { EditCourseComponent } from './components/edit/edit-course/edit-course.component';
 import { UserBooksComponent } from './components/forUser/user-books/user-books.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path:'users',component:AllUsersComponent},
   {path:'courses/course-details/:id/:isEnrolled',component:CourseDetailsComponent},
   {path:'books/book-details/:id/:isBooked',component:BookDetailsComponent},
+  {path:'users/user-details/:id/',component:UserDetailsComponent},
   {path:'my-courses/:userId', component:UserCoursesComponent},
   {path:'my-books/:userId',component:UserBooksComponent},
   {path:'courses/new-course', component:NewCourseComponent},

@@ -17,7 +17,7 @@ public bookedBooks= new BehaviorSubject<Book[]>([]);
 
   constructor(private http:HttpClient) { 
     this.getUsers().subscribe((response)=>{
-
+      
     })
   }
 
@@ -58,6 +58,17 @@ public bookedBooks= new BehaviorSubject<Book[]>([]);
 
   removeBookForUser(userId:number, bookId:number):Observable<Book>{
     return this.http.delete<Book>(this.api+ `/deleteBookForUser/${userId}/${bookId}`).pipe(tap(console.log),catchError(this.handleError));
+  }
+
+  deleteUser( id:number):Observable<Course>{
+
+    this.usersChanged.next([...this.usersChanged.value.filter(e=>e.id!=id)]);
+
+    return this.http.delete<Course>(this.api+`/deleteUser/${id}`).pipe(tap(console.log),catchError(this.handleError));
+   }
+
+  getPdf(){
+    return this.http.get(this.api+`/downloadCoursePDF`).pipe(tap(console.log),catchError(this.handleError));;
   }
 
   private handleError(error:HttpErrorResponse):Observable<never>{

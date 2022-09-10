@@ -1,5 +1,6 @@
 <section>
     <app-header></app-header>
+    <a href="http://localhost:8080/api/v1/courses/downloadCoursePDF" class="bi bi-download mx-3"> Download courses</a>
     <button class="btn add mx-4" [routerLink]="'new-course'">Add Course</button>
     <main class="row gy-2 ">
         <app-course *ngFor="let c of courses" [course]="c"></app-course>

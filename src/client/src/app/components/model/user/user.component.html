@@ -1,4 +1,11 @@
-<section>
-    <h1>{{user.name}}</h1>
-    <p>{{user.email}}</p>
-</section>
+<div class="user card col-11  m-5 d-flex align-items-center" (click)="onClick($event)" style="width: 18rem; ">
+
+    <div class="card-header" style="width: 112%; height: 80%;">
+        <h5 class="card-title">{{user.name}}</h5>
+    </div>
+    <div class="card-body justify-content-start m-0">
+
+        <p class="card-text">email: {{user.email}}</p>
+    </div>
+
+</div>

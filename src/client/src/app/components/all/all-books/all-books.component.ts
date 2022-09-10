@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
 import { BookService } from 'src/app/services/book.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-all-books',
@@ -12,7 +13,7 @@ import { BookService } from 'src/app/services/book.service';
 export class AllBooksComponent implements OnInit, OnDestroy {
   public books:Book[]=[];
   private subscription!: Subscription;
-  constructor(private bookService:BookService,private router:Router ) { }
+  constructor(private bookService:BookService,private router:Router, private userService:UserService ) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -23,5 +24,6 @@ export class AllBooksComponent implements OnInit, OnDestroy {
       this.books=[...response];
     })
   }
+  
 
 }

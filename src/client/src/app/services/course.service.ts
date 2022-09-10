@@ -44,6 +44,11 @@ export class CourseService {
     return this.http.delete<Course>(this.api+`/deleteCourse/${id}`).pipe(tap(console.log),catchError(this.handleError));
    }
 
+   getPdf():Observable<void>{
+ 
+    return this.http.get(this.api+`/downloadCoursePDF`).pipe(tap(console.log),catchError(this.handleError));
+  }
+
    private handleError(error:HttpErrorResponse):Observable<never>{
     let errorMessage:string;
   
