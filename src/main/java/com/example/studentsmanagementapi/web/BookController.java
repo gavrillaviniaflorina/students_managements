@@ -3,12 +3,21 @@ package com.example.studentsmanagementapi.web;
 
 
 import com.example.studentsmanagementapi.dto.BookDto;
+import com.example.studentsmanagementapi.exporters.BookPDFExporter;
+import com.example.studentsmanagementapi.exporters.UserPDFExporter;
 import com.example.studentsmanagementapi.model.Book;
+import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.service.BookService;
+import com.lowagie.text.DocumentException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("api/v1/books")
@@ -49,5 +58,21 @@ public class BookController {
     @GetMapping("/findBookById/{id}")
     public ResponseEntity<Book> findBookById(@PathVariable Long id){
         return new ResponseEntity<>(this.bookService.getBookById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/downloadBookPDF")
+    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=books_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<Book> listBooks = bookService.getAll();
+
+        BookPDFExporter exporter = new BookPDFExporter(listBooks);
+        exporter.export(response);
     }
 }

@@ -1,18 +1,24 @@
 package com.example.studentsmanagementapi.web;
 
-import com.example.studentsmanagementapi.dto.BookDto;
 import com.example.studentsmanagementapi.dto.UserDto;
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.service.BookService;
 import com.example.studentsmanagementapi.service.CourseService;
+import com.example.studentsmanagementapi.exporters.UserPDFExporter;
 import com.example.studentsmanagementapi.service.UserService;
+import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("api/v1/students")
@@ -44,14 +50,14 @@ public class UserController {
         return  new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @DeleteMapping("deleteUser/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<User> deleteUser(@PathVariable Long id){
         User user =this.userService.getUserById(id);
         this.userService.deleteUser(id);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @PutMapping("updateUser")
+    @PutMapping("/updateUser")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
         this.userService.updateUser(userDto);
         return new ResponseEntity<>(userDto,HttpStatus.OK);
@@ -98,4 +104,21 @@ public class UserController {
         User user=this.userService.getUserById(id);
         return new ResponseEntity<>(user.getBooks(), HttpStatus.OK);
     }
+
+    @GetMapping("/downloadUserPDF")
+    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<User> listUsers = userService.getAll();
+
+        UserPDFExporter exporter = new UserPDFExporter(listUsers);
+        exporter.export(response);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.example.studentsmanagementapi.service;
+package com.example.studentsmanagementapi.exporters;
 
 import com.example.studentsmanagementapi.model.User;
 import com.lowagie.text.*;
@@ -56,9 +56,6 @@ public class UserPDFExporter {
         PdfWriter.getInstance(document, response.getOutputStream());
 
         document.open();
-//        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-//        font.setSize(18);
-//        font.setColor(Color.BLUE);
 
         Paragraph p = new Paragraph("List of Users");
         p.setAlignment(Paragraph.ALIGN_CENTER);
