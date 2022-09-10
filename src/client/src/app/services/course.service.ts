@@ -32,6 +32,7 @@ export class CourseService {
 
    updateCourse(course:Course, id:number):Observable<Course>{
 
+    course.id=id;
     this.coursesChanged.next([...this.coursesChanged.value.filter(e=>e.id!=id), course]);
 
     return this.http.put<Course>(this.api+`/updateCourse`, course).pipe(tap(console.log),catchError(this.handleError));

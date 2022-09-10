@@ -31,7 +31,7 @@ export class BookService {
    }
 
    updateBook(book:Book, id:number):Observable<Book>{
-
+    book.id=id;
     this.booksChanged.next([...this.booksChanged.value.filter(e=>e.id!=id), book]);
 
     return this.http.put<Book>(this.api+`/updateBook`, book).pipe(tap(console.log),catchError(this.handleError));

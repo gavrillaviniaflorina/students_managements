@@ -23,7 +23,4 @@ public courses:Course[]=[];
       this.courses=[...response];
     })
   }
-
-
-
 }

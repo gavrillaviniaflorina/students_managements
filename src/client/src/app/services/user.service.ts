@@ -17,47 +17,55 @@ public bookedBooks= new BehaviorSubject<Book[]>([]);
 
   constructor(private http:HttpClient) { 
     this.getUsers().subscribe((response)=>{
-      
+      this.usersChanged.next(response);
     })
+    
+    this.getEnrolledCoursesForUser(4).subscribe(response=>{
+      this.enroledCourses.next(response);
+    })
+
+    this.getBookedBooksForUser(4).subscribe(response=>{
+      this.bookedBooks.next(response);
+    })
+
   }
-
-  addCourseForUser(userId:number, courseId:number):Observable<Course>{
-
-    return this.http.post<Course>(this.api+`/addCourseForUser/${userId}/${courseId}`,undefined).pipe(tap(console.log),catchError(this.handleError));
-  }
-
 
   getEnrolledCoursesForUser(id:number):Observable<Course[]>{
     return this.http.get<Course[]>(this.api+`/getCoursesOfUser/${id}`).pipe(tap((response:Course[])=>{
-      this.enroledCourses.next(response);
     },console.log),catchError(this.handleError)); 
   }
 
   getBookedBooksForUser(id:number):Observable<Book[]>{
     return this.http.get<Book[]>(this.api+`/getBooksOfUser/${id}`).pipe(tap((response:Book[])=>{
-      this.bookedBooks.next(response);
+     
     },console.log),catchError(this.handleError)); 
   }
 
   getUsers():Observable<User[]>{
     return this.http.get<User[]>(this.api).pipe(
-      tap((response:User[])=>{
-        this.usersChanged.next(response);
-      })
+     
     )
   }
 
-  removeCourseForUser(userId:number, courseId:number):Observable<Course>{
-    return this.http.delete<Course>(this.api+ `/deleteCourseForUser/${userId}/${courseId}`).pipe(tap(console.log),catchError(this.handleError));
+  addCourseForUser(userId:number, course:Course):Observable<Course>{
+
+    this.enroledCourses.next([...this.enroledCourses.value, course]);
+    return this.http.post<Course>(this.api+`/addCourseForUser/${userId}/${course.id}`,undefined).pipe(tap(console.log),catchError(this.handleError));
   }
 
-  addBookForUser(userId:number, bookId:number):Observable<Book>{
-
-    return this.http.post<Book>(this.api+`/addBookForUser/${userId}/${bookId}`,undefined).pipe(tap(console.log),catchError(this.handleError));
+  removeCourseForUser(userId:number, course:Course):Observable<Course>{
+    this.enroledCourses.next([...this.enroledCourses.value.filter(e=>e.id!=course.id)])
+    return this.http.delete<Course>(this.api+ `/deleteCourseForUser/${userId}/${course.id}`).pipe(tap(console.log),catchError(this.handleError));
   }
 
-  removeBookForUser(userId:number, bookId:number):Observable<Book>{
-    return this.http.delete<Book>(this.api+ `/deleteBookForUser/${userId}/${bookId}`).pipe(tap(console.log),catchError(this.handleError));
+  addBookForUser(userId:number, book:Book):Observable<Book>{
+    this.bookedBooks.next([...this.bookedBooks.value, book]);
+    return this.http.post<Book>(this.api+`/addBookForUser/${userId}/${book.id}`,undefined).pipe(tap(console.log),catchError(this.handleError));
+  }
+
+  removeBookForUser(userId:number, book:Book):Observable<Book>{
+    this.bookedBooks.next([...this.bookedBooks.value.filter(e=>e.id!=book.id)]);
+    return this.http.delete<Book>(this.api+ `/deleteBookForUser/${userId}/${book.id}`).pipe(tap(console.log),catchError(this.handleError));
   }
 
   deleteUser( id:number):Observable<Course>{

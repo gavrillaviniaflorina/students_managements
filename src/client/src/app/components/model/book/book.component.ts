@@ -35,8 +35,7 @@ export class BookComponent implements OnInit,OnDestroy {
            if(this.book.id==e.id){
              this.isBooked=true;           
            }        
-      })  
-    
+      })      
      });
 
      

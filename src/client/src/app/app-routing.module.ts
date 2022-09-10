@@ -15,7 +15,7 @@ import { UserCoursesComponent } from './components/forUser/user-courses/user-cou
 
 
 const routes: Routes = [
-  {path:'', redirectTo:'/courses',pathMatch:'full'},
+  {path:'', redirectTo:'/users',pathMatch:'full'},
   {path:'courses',component:AllCoursesComponent},
   {path:'books',component:AllBooksComponent},
   {path:'users',component:AllUsersComponent},

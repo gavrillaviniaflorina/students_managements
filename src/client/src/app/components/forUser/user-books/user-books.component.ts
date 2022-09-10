@@ -11,8 +11,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserBooksComponent implements OnInit, OnDestroy {
   public books:Book[]=[];
-  constructor(private userService:UserService, private router:Router) { }
   private subscription!:Subscription;
+  constructor(private userService:UserService, private router:Router) { }
+  
   ngOnDestroy(): void {
    this.subscription.unsubscribe();
   }
@@ -22,5 +23,4 @@ export class UserBooksComponent implements OnInit, OnDestroy {
       this.books=[...response];
     })
   }
-
 }

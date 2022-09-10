@@ -48,7 +48,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy{
   }
 
   public takeBook(){
-    this.userService.addBookForUser(this.userId,+this.id).subscribe( response=>{
+    this.book.id=+this.id;
+    this.userService.addBookForUser(this.userId,this.book).subscribe( response=>{
       this.isBooked=true;
       this.notificationService.onSuccess("Success")
     }         
@@ -56,7 +57,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy{
 }
 
 public returnBook(){
-  this.userService.removeBookForUser(this.userId,+this.id).subscribe(response=>{
+  this.book.id=+this.id;
+  this.userService.removeBookForUser(this.userId,this.book).subscribe(response=>{
     this.isBooked=false;
     this.notificationService.onSuccess("You returned this book");
   })

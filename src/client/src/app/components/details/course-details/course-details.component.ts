@@ -50,7 +50,8 @@ export class CourseDetailsComponent implements OnInit, OnDestroy {
   }
 
   public joinCourse(){
-      this.userService.addCourseForUser(this.userId,+this.id).subscribe( response=>{
+    this.course.id=+this.id;
+      this.userService.addCourseForUser(this.userId,this.course).subscribe( response=>{
         this.isEnrolled=true;
         this.notificationService.onSuccess("Success")
       }         
@@ -58,7 +59,8 @@ export class CourseDetailsComponent implements OnInit, OnDestroy {
   }
 
   public leaveCourse(){
-    this.userService.removeCourseForUser(this.userId,+this.id).subscribe(response=>{
+    this.course.id=+this.id;
+    this.userService.removeCourseForUser(this.userId,this.course).subscribe(response=>{
       this.isEnrolled=false;
       this.notificationService.onSuccess("You leaved this course");
     })
