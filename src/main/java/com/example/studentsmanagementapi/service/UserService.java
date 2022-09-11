@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -201,6 +202,21 @@ public class UserService {
             );
         }
         return this.userRepository.findById(id).get();
+    }
+
+
+    @Transactional
+    public Optional<User> searchUser(String email, String password){
+        Optional<User> user=userRepository.selectedEmailExists(email);
+        if(user.isEmpty()){
+            throw new InvalidEmailOrPasswordException("Invalid email or password");
+        }
+
+        if(!user.get().getPassword().equals(password)){
+            throw new InvalidEmailOrPasswordException("Invalid email or password");
+        }
+
+        return user;
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.studentsmanagementapi.web;
 
+import com.example.studentsmanagementapi.dto.LoginDto;
 import com.example.studentsmanagementapi.dto.UserDto;
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.model.Course;
@@ -20,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("api/v1/students")
 @RestController
@@ -46,6 +48,7 @@ public class UserController {
 
     @PostMapping("/addUser")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto user){
+
         this.userService.addUser(user);
         return  new ResponseEntity<>(user,HttpStatus.OK);
     }

@@ -17,13 +17,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class JwtUsernameAndPasswordAuthentificationFiter extends UsernamePasswordAuthenticationFilter {
+public class JwtUsernameAndPasswordAuthentificationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
-    public JwtUsernameAndPasswordAuthentificationFiter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, SecretKey secretKey) {
+    public JwtUsernameAndPasswordAuthentificationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, SecretKey secretKey) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
@@ -35,6 +35,7 @@ public class JwtUsernameAndPasswordAuthentificationFiter extends UsernamePasswor
 
         try {
 
+            System.out.println();
             UsernameAndPasswordAuthentificationRequest authentificationRequest = new ObjectMapper()
                     .readValue(request.getInputStream(), UsernameAndPasswordAuthentificationRequest.class);
 
@@ -42,6 +43,7 @@ public class JwtUsernameAndPasswordAuthentificationFiter extends UsernamePasswor
                     authentificationRequest.getUsername(),
                     authentificationRequest.getPassword()
             );
+
 
             Authentication authenticate = authenticationManager.authenticate(authentication);
             return authenticate;
@@ -64,6 +66,7 @@ public class JwtUsernameAndPasswordAuthentificationFiter extends UsernamePasswor
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
                 .signWith(secretKey)
                 .compact();
+
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
     }

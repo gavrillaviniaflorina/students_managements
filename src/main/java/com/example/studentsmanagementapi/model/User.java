@@ -8,6 +8,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.example.studentsmanagementapi.security.UserRole.USER;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name="User")
@@ -74,7 +76,7 @@ public class User implements UserDetails {
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
 
     @OneToMany(
@@ -144,7 +146,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return USER.getGrantedAuthrities();
     }
 
     public String getPassword() {
