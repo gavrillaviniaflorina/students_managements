@@ -12,10 +12,12 @@ import { EditBookComponent } from './components/edit/edit-book/edit-book.compone
 import { EditCourseComponent } from './components/edit/edit-course/edit-course.component';
 import { UserBooksComponent } from './components/forUser/user-books/user-books.component';
 import { UserCoursesComponent } from './components/forUser/user-courses/user-courses.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 const routes: Routes = [
-  {path:'', redirectTo:'/users',pathMatch:'full'},
+  {path:'', redirectTo:'/login',pathMatch:'full'},
+  {path:'login',component:LoginComponent},
   {path:'courses',component:AllCoursesComponent},
   {path:'books',component:AllBooksComponent},
   {path:'users',component:AllUsersComponent},
@@ -27,7 +29,8 @@ const routes: Routes = [
   {path:'courses/new-course', component:NewCourseComponent},
   {path:'books/new-book', component:NewBookComponent},
   {path:'courses/edit-course/:id', component:EditCourseComponent},
-  {path:'books/edit-book/:id',component:EditBookComponent}
+  {path:'books/edit-book/:id',component:EditBookComponent},
+  
   
 ];
 

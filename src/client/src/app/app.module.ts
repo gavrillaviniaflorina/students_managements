@@ -28,6 +28,7 @@ import { EditCourseComponent } from './components/edit/edit-course/edit-course.c
 import { UserBooksComponent } from './components/forUser/user-books/user-books.component';
 import { EditBookComponent } from './components/edit/edit-book/edit-book.component';
 import { UserDetailsComponent } from './components/details/user-details/user-details.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -53,6 +54,7 @@ import { UserDetailsComponent } from './components/details/user-details/user-det
     UserBooksComponent,
     EditBookComponent,
     UserDetailsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ export class NavComponent implements OnInit {
 
   constructor(private router: Router) { }
 
+  isSignedIn:boolean=false;
   ngOnInit( ): void {
   }
 
