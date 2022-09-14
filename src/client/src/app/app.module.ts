@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 
@@ -29,6 +29,8 @@ import { UserBooksComponent } from './components/forUser/user-books/user-books.c
 import { EditBookComponent } from './components/edit/edit-book/edit-book.component';
 import { UserDetailsComponent } from './components/details/user-details/user-details.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { AuthentificationService } from './services/authentification.service';
 
 
 
@@ -54,7 +56,7 @@ import { LoginComponent } from './components/login/login.component';
     UserBooksComponent,
     EditBookComponent,
     UserDetailsComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,10 @@ import { LoginComponent } from './components/login/login.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    AuthentificationService,
+    {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-nav',
@@ -11,6 +12,13 @@ export class NavComponent implements OnInit {
   constructor(private router: Router) { }
 
   isSignedIn:boolean=false;
+
+  user:User={
+    id:0,
+    name:"",
+    email:"",
+    password:""
+  }
   ngOnInit( ): void {
   }
 
