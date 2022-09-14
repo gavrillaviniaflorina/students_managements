@@ -13,6 +13,7 @@ import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,11 +43,13 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<User>> getUsers(){
         return new ResponseEntity<>(this.userService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("/addUser")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto user){
 
         this.userService.addUser(user);
@@ -54,6 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<User> deleteUser(@PathVariable Long id){
         User user =this.userService.getUserById(id);
         this.userService.deleteUser(id);
@@ -61,12 +65,14 @@ public class UserController {
     }
 
     @PutMapping("/updateUser")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
         this.userService.updateUser(userDto);
         return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 
     @PostMapping("/addBookForUser/{id}/{bookId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<Book> addBook(@PathVariable Long id,@PathVariable Long bookId){
         Book book=this.bookService.getBookById(bookId);
         this.userService.addBookForUser(id, bookId);
@@ -74,6 +80,7 @@ public class UserController {
     }
 
     @DeleteMapping("deleteBookForUser/{id}/{bookId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<Book> deleteBook(@PathVariable Long id, @PathVariable Long bookId){
         Book book=this.bookService.getBookById(bookId);
         this.userService.deleteBookForUser(id,bookId);
@@ -81,6 +88,7 @@ public class UserController {
     }
 
     @PostMapping("/addCourseForUser/{id}/{courseId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<Course> addCourse(@PathVariable Long id, @PathVariable Long courseId){
         Course course= this.courseService.getCourseById(courseId);
         userService.addCourseForUser(id,courseId);
@@ -88,6 +96,7 @@ public class UserController {
     }
 
     @DeleteMapping("deleteCourseForUser/{id}/{courseId}")
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public ResponseEntity<Course> deleteCourse(@PathVariable Long id, @PathVariable Long courseId){
         Course course=this.courseService.getCourseById(courseId);
         this.userService.deleteCourseForUser(id,courseId);
@@ -95,6 +104,7 @@ public class UserController {
     }
 
     @GetMapping("getCoursesOfUser/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<Course>> enrolledCoursesForUser(@PathVariable Long id){
         log.info("Rest request for enrolled course");
        User user=this.userService.getUserById(id);
@@ -102,6 +112,7 @@ public class UserController {
     }
 
     @GetMapping("getBooksOfUser/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<Book>> bookedBooksForUser(@PathVariable Long id){
         log.info("Rest request for enrolled course");
         User user=this.userService.getUserById(id);
@@ -109,6 +120,7 @@ public class UserController {
     }
 
     @GetMapping("/downloadUserPDF")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

@@ -9,6 +9,7 @@ import com.example.studentsmanagementapi.service.CourseService;
 import com.lowagie.text.DocumentException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,10 +30,12 @@ public class CourseController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<Course>> getCourses(){
         return new ResponseEntity<>(this.courseService.getAll(), HttpStatus.OK);
     }
     @PostMapping("/addCourse")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Course> addCourse(@RequestBody CourseDto courseDto){
         courseService.addCourse(courseDto);
         Course course= this.courseService.getCourseByName(courseDto.getName());
@@ -40,6 +43,7 @@ public class CourseController {
     }
 
     @DeleteMapping("deleteCourse/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Course> deleteCourse(@PathVariable Long id){
         Course course=this.courseService.getCourseById(id);
         this.courseService.deleteCourse(id);
@@ -47,17 +51,20 @@ public class CourseController {
     }
 
     @PutMapping("updateCourse")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseDto){
         this.courseService.updateCourse(courseDto);
         return new ResponseEntity<>(courseDto,HttpStatus.OK);
     }
 
     @GetMapping("findCourseById/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<Course> findCourseById(@PathVariable Long id){
        return new ResponseEntity<>(this.courseService.getCourseById(id), HttpStatus.OK);
     }
 
     @GetMapping("/downloadCoursePDF")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

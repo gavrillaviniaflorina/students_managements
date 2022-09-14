@@ -35,7 +35,7 @@ public class JwtUsernameAndPasswordAuthentificationFilter extends UsernamePasswo
 
         try {
 
-            System.out.println();
+            logger.info("ce mai faci");
             UsernameAndPasswordAuthentificationRequest authentificationRequest = new ObjectMapper()
                     .readValue(request.getInputStream(), UsernameAndPasswordAuthentificationRequest.class);
 
