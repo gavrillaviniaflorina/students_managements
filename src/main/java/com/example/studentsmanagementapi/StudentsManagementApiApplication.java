@@ -22,11 +22,11 @@ public class StudentsManagementApiApplication {
         SpringApplication.run(StudentsManagementApiApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(
-            UserRepository userRepository, BookRepository bookRepository, CourseRepository courseRepository
-    ){
-        return args->{
+//    @Bean
+//    CommandLineRunner commandLineRunner(
+//            UserRepository userRepository, BookRepository bookRepository, CourseRepository courseRepository
+//    ){
+//        return args->{
 
         //   Faker faker=new Faker();
 //
@@ -72,7 +72,7 @@ public class StudentsManagementApiApplication {
 //            }
 //
 //
-       };
-    }
+//       };
+//    }
 
 }
