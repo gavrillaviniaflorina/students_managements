@@ -104,7 +104,7 @@ public class UserController {
     }
 
     @GetMapping("getCoursesOfUser/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+   // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<Course>> enrolledCoursesForUser(@PathVariable Long id){
         log.info("Rest request for enrolled course");
        User user=this.userService.getUserById(id);

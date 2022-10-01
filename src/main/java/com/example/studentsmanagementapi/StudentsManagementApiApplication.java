@@ -28,7 +28,7 @@ public class StudentsManagementApiApplication {
     ){
         return args->{
 
-           Faker faker=new Faker();
+        //   Faker faker=new Faker();
 //
 //
 //            for(int i=0;i<10;i++){
@@ -40,7 +40,7 @@ public class StudentsManagementApiApplication {
 //            }
 
 //
-          User user=userRepository.findById(7L).get();
+         // User user=userRepository.findById(7L).get();
 //
 //            for(int i=0;i<10;i++){
 //

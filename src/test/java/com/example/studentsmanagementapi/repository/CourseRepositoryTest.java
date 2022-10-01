@@ -2,6 +2,7 @@ package com.example.studentsmanagementapi.repository;
 
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.model.Course;
+import com.example.studentsmanagementapi.repository.CourseRepository;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class CourseRepositoryTest {
     @Test
     void itShouldCheckIfTheNameExists(){
         Faker faker=new Faker();
-        Course course=new Course("Lavinia Gavril", "mate","");
+        Course course=new Course("Lavinia Gavril", "mate","aici");
         underTest.save(course);
         Optional<Course> expect=underTest.selectedNameExists(course.getName());
 

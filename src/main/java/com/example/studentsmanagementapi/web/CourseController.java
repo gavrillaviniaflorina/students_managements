@@ -30,7 +30,7 @@ public class CourseController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+   // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<Course>> getCourses(){
         return new ResponseEntity<>(this.courseService.getAll(), HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class CourseController {
     }
 
     @GetMapping("/downloadCoursePDF")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

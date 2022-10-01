@@ -1,8 +1,20 @@
 <section>
     <app-header></app-header>
-    <a href="http://localhost:8080/api/v1/books/downloadBookPDF" class="bi bi-download mx-3"> Download books</a>
-    <button class="btn add mx-4" [routerLink]="'new-book'">Add Book</button>
-    <main class="row gy-2 ">
+    <div class="books-intro p-5 d-flex flex-column">
+        <h1 class="my-5 ">Our books</h1>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ex, minus ipsam quas rem veritatis dolores maxime accusantium, delectus amet rerum quasi quidem ullam provident nulla vitae animi placeat consequuntur soluta? Eum ipsam repellat, minus
+        consequuntur molestias saepe eos adipisci quia praesentium quibusdam officia. Minus harum totam illum molestiae magni tempore enim maiores officiis inventore ea? Quasi officiis voluptas blanditiis perspiciatis quos. Inventore odit pariatur nostrum
+        praesentium quis voluptates labore nam earum quidem nobis! Architecto voluptatibus sequi, nobis in alias modi deleniti amet placeat sunt tenetur, ab repellat! Deleniti obcaecati mollitia veritatis dicta debitis aperiam, excepturi non consectetur
+        optio suscipit?
+
+        <div class="d-flex flex-row my-5 py-5 justify-content-between">
+            <button class="btn add " [routerLink]="'new-book'" style="width: 7%;">Add Book</button>
+            <a href="http://localhost:8080/api/v1/books/downloadBookPDF" class="bi bi-download mx-3"> Download books</a>
+        </div>
+
+    </div>
+
+    <main class="row  ">
         <app-book *ngFor="let b of books" [book]="b"></app-book>
     </main>
 </section>

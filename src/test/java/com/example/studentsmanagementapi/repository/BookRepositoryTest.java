@@ -2,6 +2,7 @@ package com.example.studentsmanagementapi.repository;
 
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.model.User;
+import com.example.studentsmanagementapi.repository.BookRepository;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -31,18 +32,18 @@ class BookRepositoryTest {
     }
 
 
-    @Test
-    void itShouldCheckIfTheNameExists(){
-        Faker faker=new Faker();
-        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-        Book book=new Book("Lavinia Gavril", date,"");
-        underTest.save(book);
-        Optional<Book> expect=underTest.selectedNameExists(book.getBook_name());
-
-
-        assertThat(expect).isNotEmpty();
-
-    }
+//    @Test
+//    void itShouldCheckIfTheNameExists(){
+//        Faker faker=new Faker();
+//        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
+//        Book book=new Book("Lavinia Gavril", date,"");
+//        underTest.save(book);
+//        Optional<Book> expect=underTest.selectedNameExists(book.getBook_name());
+//
+//
+//        assertThat(expect).isNotEmpty();
+//
+//    }
 
     @Test
     void itShouldCheckIfTheNameDoesNotExist(){

@@ -1,10 +1,10 @@
-<div class="book card col-11  m-5 d-flex align-items-center" (click)="onClick($event)" style="width: 18rem; ">
+<div class="book card col m-5 d-flex align-items-center" (click)="onClick($event)" style="width: 18rem; ">
 
-    <div class="card-header" style="width: 112%; height: 80%;">
-        <h5 class="card-title">{{book.book_name}}</h5>
+    <div class="card-header d-flex align-items-center justify-content-center" style="width: 112%; height: 90%;">
+        <i class="icon-book bi bi-book-fill"></i>
     </div>
     <div class="card-body justify-content-start m-0">
-
+        <h5 class="card-title">{{book.book_name}}</h5>
         <p class="card-text">created at: {{book.created_at}}</p>
     </div>
 

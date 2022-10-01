@@ -1,6 +1,7 @@
 package com.example.studentsmanagementapi.repository;
 
 import com.example.studentsmanagementapi.model.User;
+import com.example.studentsmanagementapi.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

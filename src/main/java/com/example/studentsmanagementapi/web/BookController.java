@@ -9,6 +9,7 @@ import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.model.User;
 import com.example.studentsmanagementapi.service.BookService;
 import com.lowagie.text.DocumentException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequestMapping("api/v1/books")
 @RestController
 @CrossOrigin
+@Slf4j
 public class BookController {
 
     private BookService bookService;
@@ -67,8 +69,10 @@ public class BookController {
     }
 
     @GetMapping("/downloadBookPDF")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    //@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+
+        log.info("ceva");
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());

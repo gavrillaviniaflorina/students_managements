@@ -15,6 +15,7 @@ export class AuthentificationService {
   private token: ?string;
 
   constructor(private http:HttpClient){}
+  
 
   loginUser(credentials:UserCredentials):Observable<any>{
     return this.http.post<User>(environment.api+'/login', credentials,{observe:'response'}).pipe(tap(console.log),catchError(this.handleError))

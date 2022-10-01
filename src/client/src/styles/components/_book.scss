@@ -1,7 +1,13 @@
 .book {
     border: 2px solid #e8efff;
-    & .card-header {
-        background-color: #e8efff;
-        color: black;
+    background-color: #005550;
+    border-radius: 20px;
+    color: white;
+    & .icon-book {
+        padding: 10px;
+        background-color: white;
+        border-radius: 10px;
+        border-bottom-left-radius: 30px;
+        color: #005550;
     }
 }

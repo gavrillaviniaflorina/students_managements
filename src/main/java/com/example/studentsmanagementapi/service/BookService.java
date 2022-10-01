@@ -1,15 +1,18 @@
 package com.example.studentsmanagementapi.service;
 
+import com.example.studentsmanagementapi.constants.Constants;
 import com.example.studentsmanagementapi.dto.BookDto;
 import com.example.studentsmanagementapi.exceptions.BookExistsException;
 import com.example.studentsmanagementapi.exceptions.BookNotFoundException;
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.repository.BookRepository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@Slf4j
 public class BookService {
 
     private BookRepository bookRepository;
@@ -47,11 +50,12 @@ public class BookService {
 
     public void updateBook(BookDto updateBook){
 
+
         Boolean updated=this.bookRepository.selectedNameExists(updateBook.getBook_name()).isPresent();
 
         if(!updated){
             throw new BookNotFoundException(
-                    "Book" +updateBook.getBook_name()+" not found"
+                    Constants.BOOK_NOT_FOUND+"book with name "+updateBook.getBook_name()
             );
         }
         Book bookFound=this.bookRepository.selectedNameExists(updateBook.getBook_name()).get();

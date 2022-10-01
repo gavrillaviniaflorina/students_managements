@@ -37,6 +37,10 @@ export class NavComponent implements OnInit {
     this.router.navigate(['/users']);
   }
 
+  public goToSignIn(): void{
+    this.router.navigate(['login']);
+  }
+
 
 
 }
