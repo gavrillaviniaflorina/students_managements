@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   backend:
-    image: "laviniaflorinagavril/students-management:16.9.2022.14.34.37"
+    image: "laviniaflorinagavril/students-management:1.10.2022.15.24.6"
     ports:
       - "80:8080"
     restart: "always"
