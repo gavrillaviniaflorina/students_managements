@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { BookService } from 'src/app/services/book.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,10 +14,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class BookDetailsComponent implements OnInit, OnDestroy{
 
-  userId:number=2;
+  
+  userId:number=0;
   id:string="";
   isBooked:boolean=false;
-
+  
   @Input() book:Book={
     id:0,
     book_name:"",
@@ -26,14 +28,24 @@ export class BookDetailsComponent implements OnInit, OnDestroy{
   
   private subscription!: Subscription;
   private subscriptionOnBooksChanged!:Subscription;
-  constructor(private bookService:BookService, private userService:UserService, private route:ActivatedRoute, private router:Router, private notificationService:NotificationService) { }
+  private subscriptionOnUser!:Subscription;
+
+  constructor(private bookService:BookService, 
+    private userService:UserService, 
+    private route:ActivatedRoute, 
+    private router:Router, 
+    private notificationService:NotificationService) { }
   
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.subscriptionOnBooksChanged.unsubscribe();
+    this.subscriptionOnUser.unsubscribe();
   }
 
   ngOnInit(): void {
+    this.subscriptionOnUser=this.userService.loggedUser.subscribe(resp=>{
+      this.userId=resp;
+    })
     this.subscription=this.route.params.subscribe(params=>{
       this.id=params['id'];
       this.isBooked= params['isBooked']=="true";

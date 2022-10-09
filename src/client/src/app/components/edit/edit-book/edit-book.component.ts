@@ -24,7 +24,8 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
   //@ts-ignore
   bookForm:FormGroup;
-  id:string='ceva'; 
+  id:string='ceva';
+
   book:Book={
     id:0,
     book_name:"",
@@ -33,7 +34,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   };
 
   private subscription!:Subscription;
-  private subscriptionForRouter!:Subscription;
+  
   ngOnInit(): void {
    
     this.route.params.subscribe(params=>{
@@ -96,8 +97,5 @@ export class EditBookComponent implements OnInit, OnDestroy {
   window.addEventListener("beforeunload", ()=>{
     this.router.navigate(['/books']);
   })
-  
-  
-
   }
 }

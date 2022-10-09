@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, ɵsetAllowDuplicateNgModuleIdsForTest } from '@angular/core';
-import { catchError, Observable, throwError, tap} from 'rxjs';
+import { catchError, Observable, throwError, tap, BehaviorSubject} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserCredentials } from '../models/login';
 import { User } from '../models/user';
@@ -11,6 +11,11 @@ import { User } from '../models/user';
 export class AuthentificationService {
 
   private api=environment.api+"/api/v1/students";
+
+  //@ts-ignore
+  public user=new BehaviorSubject<Long>();
+
+
   //@ts-ignore
   private token: ?string;
 
@@ -18,7 +23,9 @@ export class AuthentificationService {
   
 
   loginUser(credentials:UserCredentials):Observable<any>{
-    return this.http.post<User>(environment.api+'/login', credentials,{observe:'response'}).pipe(tap(console.log),catchError(this.handleError))
+
+    return this.http.post<User>(environment.api+'/login', credentials,{observe:'response'})
+    .pipe(catchError(this.handleError))
   }
 
   loadToken():void{
@@ -36,7 +43,7 @@ export class AuthentificationService {
   addUserToLocalCache(user:any){}
 
   private handleError(error:HttpErrorResponse):Observable<never>{
-    console.log(error);
+   // console.log(error);
     let errorMessage:string;
   
     if(error.error instanceof ErrorEvent){

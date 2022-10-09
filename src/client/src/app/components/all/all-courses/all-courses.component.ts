@@ -10,12 +10,14 @@ import { CourseService } from '../../../services/course.service';
   styleUrls: ['./all-courses.component.sass']
 })
 export class AllCoursesComponent implements OnInit, OnDestroy {
+
   public courses:Course[]=[];
   private subscription!: Subscription;
-  constructor(private courseService:CourseService, private router:Router) { 
 
-    
-  }
+  constructor(
+    private courseService:CourseService,
+    private router:Router)
+    { }
 
   ngOnDestroy(): void {
    this.subscription.unsubscribe();
@@ -26,6 +28,4 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
       this.courses=[...response];
     })
   }
-
-
 }

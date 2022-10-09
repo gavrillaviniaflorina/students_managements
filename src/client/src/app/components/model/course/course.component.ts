@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./course.component.sass']
 })
 export class CourseComponent implements OnInit, OnDestroy {
-  userId:number=4;
+  private userId:number=0;
   id:string="";
   isEnrolled=false;
 
@@ -23,13 +23,20 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   private subscription!: Subscription;
+  private subscriptonOnUser!: Subscription;
 
   constructor(private courseService:CourseService, private userService:UserService, private router:Router) { }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.subscriptonOnUser.unsubscribe();
   }
 
   ngOnInit(): void {
+
+    this.subscriptonOnUser=this.userService.loggedUser.subscribe(response=>{
+      this.userId=response;
+     })
+
     this.subscription=this.userService.getEnrolledCoursesForUser(this.userId).subscribe(response=>{  
       response.forEach(e=>{
            if(this.course.id==e.id){

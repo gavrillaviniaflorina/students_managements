@@ -1,10 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, Subscription, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Book } from '../models/book';
 import { Course } from '../models/course';
 import { User } from '../models/user';
+import { AuthentificationService } from './authentification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,20 +15,29 @@ private api=environment.api+"/api/v1/students";
 public usersChanged=new BehaviorSubject<User[]>([]);
 public enroledCourses= new BehaviorSubject<Course[]>([]);
 public bookedBooks= new BehaviorSubject<Book[]>([]);
+ //@ts-ignore
+public loggedUser = new BehaviorSubject<Long>();
 
-  constructor(private http:HttpClient) { 
+private subscriptionOnUser!:Subscription;
+
+  constructor(
+    private http:HttpClient, 
+    private authentificationService:AuthentificationService) { 
     this.getUsers().subscribe((response)=>{
       this.usersChanged.next(response);
     })
-    
-    this.getEnrolledCoursesForUser(4).subscribe(response=>{
+ 
+    this.subscriptionOnUser=this.authentificationService.user.subscribe(response=>{
+      this.loggedUser.next(response);
+    })
+  
+    this.getEnrolledCoursesForUser(this.loggedUser.value).subscribe(response=>{
       this.enroledCourses.next(response);
     })
 
-    this.getBookedBooksForUser(4).subscribe(response=>{
+    this.getBookedBooksForUser(this.loggedUser.value).subscribe(response=>{
       this.bookedBooks.next(response);
     })
-
   }
 
   getEnrolledCoursesForUser(id:number):Observable<Course[]>{
@@ -42,13 +52,11 @@ public bookedBooks= new BehaviorSubject<Book[]>([]);
   }
 
   getUsers():Observable<User[]>{
-    return this.http.get<User[]>(this.api).pipe(
-     
+    return this.http.get<User[]>(this.api).pipe(     
     )
   }
 
   addCourseForUser(userId:number, course:Course):Observable<Course>{
-
     this.enroledCourses.next([...this.enroledCourses.value, course]);
     return this.http.post<Course>(this.api+`/addCourseForUser/${userId}/${course.id}`,undefined).pipe(tap(console.log),catchError(this.handleError));
   }
@@ -76,11 +84,15 @@ public bookedBooks= new BehaviorSubject<Book[]>([]);
    }
 
   getPdf(){
-    return this.http.get(this.api+`/downloadCoursePDF`).pipe(tap(console.log),catchError(this.handleError));;
+    return this.http.get(this.api+`/downloadCoursePDF`).pipe(tap(console.log),catchError(this.handleError));
+  }
+
+  getUserFormId(id:number):Observable<User>{
+    return this.http.get(this.api+`/getLoggedUser/${id}`).pipe(tap(console.log),catchError(this.handleError));
   }
 
   private handleError(error:HttpErrorResponse):Observable<never>{
-    console.log(error);
+   // console.log(error);
     let errorMessage:string;
   
     if(error.error instanceof ErrorEvent){

@@ -24,7 +24,6 @@ export class AuthInterceptor implements HttpInterceptor{
     //   return handler.handle(request);
     // }
 
-    console.log("aici");
     this.authentificationService.loadToken();
     const token=this.authentificationService.getToken();
     const httpRequest=request.clone({

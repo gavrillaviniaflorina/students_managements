@@ -10,9 +10,14 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-books.component.sass']
 })
 export class UserBooksComponent implements OnInit, OnDestroy {
+
   public books:Book[]=[];
   private subscription!:Subscription;
-  constructor(private userService:UserService, private router:Router) { }
+
+  constructor(
+    private userService:UserService, 
+    private router:Router) 
+    { }
   
   ngOnDestroy(): void {
    this.subscription.unsubscribe();

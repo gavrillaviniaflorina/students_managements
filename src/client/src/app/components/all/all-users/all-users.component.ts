@@ -14,7 +14,10 @@ export class AllUsersComponent implements OnInit, OnDestroy {
   public users:User[]=[];
   private subscription!: Subscription;
   
-  constructor(private userService:UserService, private router:Router) { }
+  constructor(
+    private userService:UserService,
+    private router:Router) 
+    { }
   
   ngOnDestroy(): void {
    this.subscription.unsubscribe();
@@ -25,5 +28,4 @@ export class AllUsersComponent implements OnInit, OnDestroy {
       this.users=[...response]; 
     })
   }
-
 }

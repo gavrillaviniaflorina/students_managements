@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
    
   this.login.username=this.loginForm.value['email'];
   this.login.password=this.loginForm.value['password'];
-  console.log(this.login);
     this.userLogin(this.login);
   }
  
@@ -54,6 +53,7 @@ export class LoginComponent implements OnInit {
       const token=response.headers.get('Authorization');
       this.authentificationService.saveToken(token!);
       this.router.navigate(['/books']);
+      this.authentificationService.user.next(response.headers.get('id'));        
     })
   }
   
