@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthentificationFilter(authenticationManager(), jwtConfig, secretKey, userRepository))
+                .addFilter(new JwtUsernameAndPasswordAuthentificationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthentificationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/**")

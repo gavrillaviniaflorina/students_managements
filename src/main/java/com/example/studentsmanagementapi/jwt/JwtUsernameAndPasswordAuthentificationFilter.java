@@ -1,5 +1,6 @@
 package com.example.studentsmanagementapi.jwt;
 
+import com.example.studentsmanagementapi.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +23,7 @@ public class JwtUsernameAndPasswordAuthentificationFilter extends UsernamePasswo
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
+
 
     public JwtUsernameAndPasswordAuthentificationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, SecretKey secretKey) {
         this.authenticationManager = authenticationManager;
