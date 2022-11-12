@@ -119,6 +119,16 @@ public class UserController {
         return new ResponseEntity<>(user.getBooks(), HttpStatus.OK);
     }
 
+    @GetMapping("getIdFromEmail/{email}")
+    public ResponseEntity<Optional<Long>> getId(@PathVariable String email){
+        return new ResponseEntity<>(this.userService.getIdFromEmail(email), HttpStatus.OK);
+    }
+
+    @GetMapping("getLoggedUser/{id}")
+    public ResponseEntity<User> hetLoggedUser(@PathVariable Long id){
+        return new ResponseEntity<>(this.userService.getUserById(id),HttpStatus.OK);
+    }
+
     @GetMapping("/downloadUserPDF")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
@@ -135,5 +145,7 @@ public class UserController {
         UserPDFExporter exporter = new UserPDFExporter(listUsers);
         exporter.export(response);
     }
+
+
 
 }

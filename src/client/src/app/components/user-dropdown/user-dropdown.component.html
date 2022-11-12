@@ -1,10 +1,15 @@
-<div class="dropdown mr-5">
-    <button type="button" class="btn options dropdown-toggle p-0 pl-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="d-flex flex-row justify-content-between">
+    <p>{{user.name}}</p>
+    <div class="dropdown mr-5">
+        <button type="button" class="btn options dropdown-toggle p-0 pl-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="bi bi-person-circle"></i>
       </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div class="dropdown-item">User Profile</div>
-        <div class="dropdown-item" (click)="myBooks($event)">My Books</div>
-        <div class="dropdown-item" (click)="myCourses($event)">My Courses</div>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-item">User Profile</div>
+            <div class="dropdown-item" (click)="myBooks($event)">My Books</div>
+            <div class="dropdown-item" (click)="myCourses($event)">My Courses</div>
+            <hr>
+            <div class="dropdown-item" (click)="logout($event)">Log Out</div>
+        </div>
     </div>
 </div>

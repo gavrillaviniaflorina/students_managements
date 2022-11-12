@@ -1,20 +1,15 @@
 package com.example.studentsmanagementapi.service;
 
-import com.example.studentsmanagementapi.dto.BookDto;
 import com.example.studentsmanagementapi.dto.CourseDto;
-import com.example.studentsmanagementapi.exceptions.BookExistsException;
-import com.example.studentsmanagementapi.exceptions.BookNotFoundException;
 import com.example.studentsmanagementapi.exceptions.CourseExistsException;
 import com.example.studentsmanagementapi.exceptions.CourseNotFoundException;
 import com.example.studentsmanagementapi.model.Book;
 import com.example.studentsmanagementapi.model.Course;
 import com.example.studentsmanagementapi.repository.CourseRepository;
-import com.example.studentsmanagementapi.repository.UserRepository;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,13 +25,6 @@ class CourseServiceTest {
 
     @Mock
     private CourseRepository courseRepository;
-
-    @Mock
-    private UserRepository personRepository;
-
-    @MockBean
-    private UserService mockUserService;
-
     @Captor
     private ArgumentCaptor<Course> courseArgumentCaptor;
 
@@ -93,7 +81,7 @@ class CourseServiceTest {
         underTest.deleteCourse(course.getId());
         BDDMockito.then(courseRepository).should().deleteById(course.getId());
     }
-//
+
     @Test
     void ItShouldThrowAnExceptonWhenDeletingBook() {
 
@@ -136,15 +124,14 @@ class CourseServiceTest {
         assertThatThrownBy(() -> underTest.updateCourse(course)).isInstanceOf(CourseNotFoundException.class).hasMessageContaining("Course not found");
     }
 
-//    @Test
-//    void ItShouldGetBookById() {
-//        Faker faker = new Faker();
-//        LocalDate date = LocalDate.of(faker.number().numberBetween(2010, 2022), faker.number().numberBetween(1, 12), faker.number().numberBetween(1, 30));
-//        Book book = new Book("lavinia", date);
-//        book.setId(1L);
-//
-//        doReturn(Optional.of(book)).when(courseRepository).findById(book.getId());
-//
-//
-//    }
+    @Test
+    void ItShouldGetCourseById() {
+        Faker faker = new Faker();
+        LocalDate date = LocalDate.of(faker.number().numberBetween(2010, 2022), faker.number().numberBetween(1, 12), faker.number().numberBetween(1, 30));
+        Course course = new Course("carte", "mate","");
+        course.setId(1L);
+
+        courseRepository.save(course);
+        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
+    }
 }

@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/models/course';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { CourseService } from 'src/app/services/course.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -25,7 +26,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   private subscriptonOnUser!: Subscription;
 
-  constructor(private courseService:CourseService, private userService:UserService, private router:Router) { }
+  constructor(private courseService:CourseService, private authentificationService: AuthentificationService, private userService:UserService, private router:Router) { }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.subscriptonOnUser.unsubscribe();
@@ -33,7 +34,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.subscriptonOnUser=this.userService.loggedUser.subscribe(response=>{
+    this.subscriptonOnUser=this.authentificationService.user.subscribe(response=>{
       this.userId=response;
      })
 

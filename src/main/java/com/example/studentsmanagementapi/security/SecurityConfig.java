@@ -3,6 +3,7 @@ package com.example.studentsmanagementapi.security;
 import com.example.studentsmanagementapi.jwt.JwtConfig;
 import com.example.studentsmanagementapi.jwt.JwtTokenVerifier;
 import com.example.studentsmanagementapi.jwt.JwtUsernameAndPasswordAuthentificationFilter;
+import com.example.studentsmanagementapi.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,15 +30,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
-
+    private UserRepository userRepository;
 
     public SecurityConfig(PasswordEncoder passwordEncoder,
                           UserDetailsService userDetailsService,
-                          SecretKey secretKey, JwtConfig jwtConfig) {
+                          SecretKey secretKey, JwtConfig jwtConfig,
+                          UserRepository userRepository
+    ) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.secretKey = secretKey;
         this.jwtConfig=jwtConfig;
+        this.userRepository=userRepository;
 
     }
     @Override
@@ -46,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtUsernameAndPasswordAuthentificationFilter(authenticationManager(), jwtConfig, secretKey))
+                .addFilter(new JwtUsernameAndPasswordAuthentificationFilter(authenticationManager(), jwtConfig, secretKey, userRepository))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthentificationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/**")
@@ -69,12 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:4200"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type", "Accept", "Jwt-Token", "Authorization", "Origin, Accept", "X-Requested-With",
-                "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+                "Access-Control-Request-Method", "Access-Control-Request-Headers","id"));
         corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Jwt-Token", "Authorization", "Access-Control-Allow-Origin",
-                "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Filename"));
+                "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Filename","id"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
 

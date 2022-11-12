@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { User } from 'src/app/models/user';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,19 +12,27 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserDropdownComponent implements OnInit, OnDestroy {
 
-  userId:number=0;
+  @Input() userId:number=0;
   private subscriptionOnUser!:Subscription; 
+  private subscriptionOnLoggedUser!:Subscription;
 
-  constructor( private router:Router, private userService:UserService) { }
+  user:User={
+    id:0,
+    name:"",
+    email:"",
+    password:""
+  }
+  constructor( private router:Router, private userService:UserService, private authentificationService:AuthentificationService) { }
   
   ngOnInit(): void {
-     this.subscriptionOnUser=this.userService.loggedUser.subscribe(response=>{
-      this.userId=response;
-    });
+
+     this.subscriptionOnLoggedUser=this.userService.getUserFormId(this.userId).subscribe({
+      next :(response) => this.user=response,
+    })
   }
 
   ngOnDestroy(): void {
-    this.subscriptionOnUser.unsubscribe();
+   this.subscriptionOnLoggedUser.unsubscribe();
   }
 
   public myCourses(event:Event){
@@ -35,4 +45,11 @@ export class UserDropdownComponent implements OnInit, OnDestroy {
     this.router.navigate([`my-books/${this.userId}`]);
   }
 
+  public logout(event:Event){
+
+    this.authentificationService.logout();
+    this.authentificationService.user.next(null);
+    
+    this.router.navigate(["login"]);
+  }
 }

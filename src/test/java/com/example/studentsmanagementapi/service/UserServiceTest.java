@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -73,17 +72,17 @@ class UserServiceTest {
         assertThat(underTest.getAll()).isEqualTo(persons);
     }
 
-//    @Test
-//    void isShouldAddUser(){
-//        UserDto user=new UserDto("lavinia","lavi@gmail.com","qw12");
-//        doReturn(Optional.empty()).when(userRepository).selectedEmailExists(user.getEmail());
-//        underTest.addUser(user);
-//
-//        BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
-//        User userSaved=userArgumentCaptor.getValue();
-//        UserDto userDto=new UserDto(userSaved.getName(),userSaved.getEmail(),new BCryptPasswordEncoder().encode(userSaved.getPassword()));
-//        assertThat(userDto).isEqualTo(user);
-//    }
+    @Test
+    void isShouldAddUser(){
+        UserDto user=new UserDto("lavinia","lavi@gmail.com","qw12");
+        doReturn(Optional.empty()).when(userRepository).selectedEmailExists(user.getEmail());
+        underTest.addUser(user);
+
+        BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
+        User userSaved=userArgumentCaptor.getValue();
+        UserDto userDto=new UserDto(userSaved.getName(),userSaved.getEmail(),new BCryptPasswordEncoder().encode(userSaved.getPassword()));
+        assertThat(new BCryptPasswordEncoder().matches(user.getPassword(),userSaved.getPassword())).isEqualTo(true);
+    }
 
     @Test
     void ItShouldThrowAnExceptonWhenAddingAnUser(){
@@ -195,20 +194,6 @@ class UserServiceTest {
         assertThatThrownBy(()->underTest.addBookForUser(user.getId(),book.getId())).isInstanceOf(BookNotFoundException.class).hasMessageContaining("The book does exist");
     }
 
-//    @Test
-//    void IsShouldDeleteBookForUser(){
-//        User user=new User("ceva","as@gmail.com","aqee1");
-//        user.setId(1L);
-//        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
-//
-//        Faker faker=new Faker();
-//        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-//        Book book =new Book("a",date,"");
-//        book.setId(1L);
-//        doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
-//        underTest.deleteBookForUser(user.getId(),book.getId());
-//
-//    }
 
     @Test
     void ItShouldThrowUserNotFoundExceptionWhenDeletingBookForUser(){
@@ -284,26 +269,6 @@ class UserServiceTest {
         assertThatThrownBy(()->underTest.addCourseForUser(user.getId(),course.getId())).isInstanceOf(CourseNotFoundException.class).hasMessageContaining("Course does not exists");
     }
 
-//    @Test
-//    void IsShouldDeleteCourseForUser(){
-//        User user=new User("ceva","as@gmail.com","aqee1");
-//        user.setId(1L);
-//        doReturn(Optional.of(user)).when(userRepository).findById(user.getId());
-//
-//        Course course =new Course("a","ceva");
-//        course.setId(1L);
-//        doReturn(Optional.of(course)).when(courseRepository).findById(course.getId());
-//
-//        underTest.deleteCourseForUser(user.getId(),course.getId());
-//        BDDMockito.then(userRepository).should().save(userArgumentCaptor.capture());
-//        BDDMockito.then(courseRepository).should().save(courseArgumentCaptor.capture());
-//
-//        User user1=userArgumentCaptor.getValue();
-//        Course course1=courseArgumentCaptor.getValue();
-//        assertThat(user1).isEqualTo(user);
-//        assertThat(course1).isEqualTo(course);
-//    }
-
     @Test
     void ItShouldThrowUserNotFoundExceptionWhenDeletingCourseForUser(){
         User user=new User("ceva","as@gmail.com","aqee1");
@@ -331,5 +296,4 @@ class UserServiceTest {
 
         assertThatThrownBy(()->underTest.deleteCourseForUser(user.getId(),course.getId())).isInstanceOf(CourseNotFoundException.class).hasMessageContaining("Course does not exists");
     }
-
 }

@@ -13,8 +13,7 @@ export class AuthentificationService {
   private api=environment.api+"/api/v1/students";
 
   //@ts-ignore
-  public user=new BehaviorSubject<Long>();
-
+  public user=new BehaviorSubject<Long>(null);
 
   //@ts-ignore
   private token: ?string;
@@ -38,6 +37,10 @@ export class AuthentificationService {
 
   getToken(){
     return this.token;
+  }
+
+  logout(){
+    localStorage.removeItem("jwtToken");
   }
 
   addUserToLocalCache(user:any){}

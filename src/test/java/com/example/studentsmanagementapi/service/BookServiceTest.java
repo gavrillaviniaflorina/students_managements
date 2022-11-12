@@ -28,12 +28,6 @@ class BookServiceTest {
     @Mock
     private BookRepository bookRepository;
 
-    @Mock
-    private UserRepository personRepository;
-
-    @MockBean
-    private UserService mockUserService;
-
     @Captor
     private ArgumentCaptor<Book> bookArgumentCaptor;
 
@@ -149,11 +143,7 @@ class BookServiceTest {
         Book book=new Book("lavinia", date, "");
         book.setId(1L);
 
+        bookRepository.save(book);
         doReturn(Optional.of(book)).when(bookRepository).findById(book.getId());
-
-
-
-
-
     }
 }

@@ -16,8 +16,7 @@ export class AllBooksComponent implements OnInit, OnDestroy {
 
   constructor(
     private bookService:BookService,
-    private router:Router,
-    private userService:UserService)
+    private router:Router)
     { }
 
   ngOnDestroy(): void {
@@ -27,6 +26,7 @@ export class AllBooksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription=this.bookService.booksChanged.subscribe(response=>{
       this.books=[...response];
+      console.log(response);
     })
   }
 }

@@ -143,6 +143,8 @@
 
     </dependencies>
 
+
+<!--    pt deploy-->
     <build>
         <plugins>
             <plugin>

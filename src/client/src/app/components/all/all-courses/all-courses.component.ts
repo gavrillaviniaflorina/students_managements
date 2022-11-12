@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { Course } from '../../../models/course';
 import { CourseService } from '../../../services/course.service';
 
@@ -9,6 +10,7 @@ import { CourseService } from '../../../services/course.service';
   templateUrl: './all-courses.component.html',
   styleUrls: ['./all-courses.component.sass']
 })
+
 export class AllCoursesComponent implements OnInit, OnDestroy {
 
   public courses:Course[]=[];
@@ -16,8 +18,9 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
 
   constructor(
     private courseService:CourseService,
+    private authentificationService: AuthentificationService,
     private router:Router)
-    { }
+    {}
 
   ngOnDestroy(): void {
    this.subscription.unsubscribe();
@@ -26,6 +29,7 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription=this.courseService.coursesChanged.subscribe(response=>{
       this.courses=[...response];
+      console.log(response);
     })
   }
 }

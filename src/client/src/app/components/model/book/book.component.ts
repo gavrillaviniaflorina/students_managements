@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Book } from 'src/app/models/book';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { BookService } from 'src/app/services/book.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -23,13 +24,18 @@ export class BookComponent implements OnInit,OnDestroy {
   }
 
   private subscription!: Subscription;
+  private subscriptonOnUser!: Subscription;
 
-  constructor(private bookService:BookService,private userService:UserService, private router:Router) { }
+  constructor(private bookService:BookService,private userService:UserService,private authentificationService:AuthentificationService, private router:Router) { }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   ngOnInit(): void {
+
+    this.subscriptonOnUser=this.authentificationService.user.subscribe(response=>{
+      this.userId=response;
+     })
     this.subscription=this.userService.getBookedBooksForUser(this.userId).subscribe(response=>{  
       response.forEach(e=>{
            if(this.book.id==e.id){
@@ -37,8 +43,7 @@ export class BookComponent implements OnInit,OnDestroy {
            }        
       })      
      });
-
-     
+ 
   }
 
   public onClick(event:Event){

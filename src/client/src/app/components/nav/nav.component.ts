@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,33 +12,28 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private userService:UserService) { }
+  constructor(private router: Router, private authentificationService:AuthentificationService) { }
  
   isSignedIn:boolean=false;
 
   private subscriptionOnUser!:Subscription; 
-  private userId:number=0;
-  private subscriptionOnLoggedUser!:Subscription;
+   userId:number=0;
 
-  user:User={
-    id:0,
-    name:"",
-    email:"",
-    password:""
-  }
   ngOnInit( ): void {
-    this.subscriptionOnUser=this.userService.loggedUser.subscribe(response=>{
-      this.userId=response;
+    this.subscriptionOnUser=this.authentificationService.user.subscribe({
+      next: (response) =>{
+        if(response===null){
+          this.isSignedIn=false;      
+        }else{
+          this.userId=response;
+          this.isSignedIn=true;
+        }      
+      } 
     });
-
-    this.subscriptionOnLoggedUser=this.userService.getUserFormId(this.userId).subscribe(response=>{
-      this.user=response;
-    })
   }
 
   ngOnDestroy(): void {
     this.subscriptionOnUser.unsubscribe();
-    this.subscriptionOnLoggedUser.unsubscribe();
   }
 
   public goToCourses(): void {
@@ -56,6 +52,7 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   public goToSignIn(): void{
+
     this.router.navigate(['login']);
   }
 }

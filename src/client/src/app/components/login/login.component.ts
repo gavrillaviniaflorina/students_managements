@@ -13,17 +13,23 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fromBuilder:FormBuilder, private notificationService:NotificationService, private authentificationService:AuthentificationService, private router:Router ) { }
+  constructor(private notificationService:NotificationService, private authentificationService:AuthentificationService, private router:Router ) { }
   //@ts-ignore
   loginForm:FormGroup;
   ngOnInit(): void {
-    
+    this.checkLogin();
     this.initForm();
   }
 
   login:UserCredentials={
     username:"",
     password:""
+  }
+
+  private checkLogin(){
+    if(localStorage.getItem("jwtToken")!==null){
+      this.router.navigate(['/books']);
+    }
   }
 
   private initForm(){
@@ -52,8 +58,8 @@ export class LoginComponent implements OnInit {
     this.authentificationService.loginUser(credentials).subscribe((response:HttpResponse<any>)=>{
       const token=response.headers.get('Authorization');
       this.authentificationService.saveToken(token!);
-      this.router.navigate(['/books']);
-      this.authentificationService.user.next(response.headers.get('id'));        
+      this.authentificationService.user.next(response.headers.get('id')); 
+      this.router.navigate(['/courses']);       
     })
   }
   

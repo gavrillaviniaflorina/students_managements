@@ -30,7 +30,7 @@ public class CourseController {
     }
 
     @GetMapping
-   // @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<Course>> getCourses(){
         return new ResponseEntity<>(this.courseService.getAll(), HttpStatus.OK);
     }

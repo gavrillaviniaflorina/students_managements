@@ -195,6 +195,7 @@ public class UserService {
 
     }
 
+    @Transactional
     public User getUserById(Long id){
         if(this.userRepository.findById(id).isEmpty()){
             throw new UserNotFoundException(
@@ -219,8 +220,16 @@ public class UserService {
         return user;
     }
 
+    @Transactional
+    public Optional<Long> getIdFromEmail(String email){
 
+        Optional<Long> id=userRepository.findIdByUserName(email);
+        if(id.isEmpty()){
+            throw new InvalidEmailOrPasswordException("The email does not exist");
+        }
 
+        return id;
+    }
 
     }
 

@@ -21,22 +21,9 @@ public loggedUser = new BehaviorSubject<Long>();
 private subscriptionOnUser!:Subscription;
 
   constructor(
-    private http:HttpClient, 
-    private authentificationService:AuthentificationService) { 
+    private http:HttpClient) { 
     this.getUsers().subscribe((response)=>{
       this.usersChanged.next(response);
-    })
- 
-    this.subscriptionOnUser=this.authentificationService.user.subscribe(response=>{
-      this.loggedUser.next(response);
-    })
-  
-    this.getEnrolledCoursesForUser(this.loggedUser.value).subscribe(response=>{
-      this.enroledCourses.next(response);
-    })
-
-    this.getBookedBooksForUser(this.loggedUser.value).subscribe(response=>{
-      this.bookedBooks.next(response);
     })
   }
 

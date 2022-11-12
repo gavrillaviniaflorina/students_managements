@@ -31,20 +31,6 @@ class BookRepositoryTest {
         underTest.deleteAll();
     }
 
-
-//    @Test
-//    void itShouldCheckIfTheNameExists(){
-//        Faker faker=new Faker();
-//        LocalDate date= LocalDate.of(faker.number().numberBetween(2010,2022),faker.number().numberBetween(1,12),faker.number().numberBetween(1,30));
-//        Book book=new Book("Lavinia Gavril", date,"");
-//        underTest.save(book);
-//        Optional<Book> expect=underTest.selectedNameExists(book.getBook_name());
-//
-//
-//        assertThat(expect).isNotEmpty();
-//
-//    }
-
     @Test
     void itShouldCheckIfTheNameDoesNotExist(){
 
